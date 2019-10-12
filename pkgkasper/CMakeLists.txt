@@ -23,6 +23,13 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+# Make Box Executable
+add_executable(${PROJECT_NAME}_make_box src/make_box.cpp)
+set_target_properties(${PROJECT_NAME}_make_box PROPERTIES OUTPUT_NAME make_box PREFIX "")
+target_link_libraries(${PROJECT_NAME}_make_box
+  ${catkin_LIBRARIES}
+)
+
 
 #############
 ## Install ##
@@ -30,6 +37,6 @@ include_directories(
 
 # Mark executables for installation
 install(TARGETS
-
+  ${PROJECT_NAME}_make_box
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
