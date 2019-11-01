@@ -1,0 +1,8 @@
+1. ssh username@Turtle_ipadress
+
+2. I ssh terminal: roscore
+3. I ssh terminal: export ROS_IP=ipadresse_ikke_turtlebot_pc
+
+4. I styringsPC terminal: export ROS_MASTER_URI=http://Turtle_ipadress:11311
+
+5. source filer og hyg
