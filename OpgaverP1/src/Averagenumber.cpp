@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
-template <typename T>
 
-double output(const std::vector<T>& tal)
+
+double output(std::vector<double>& tal)
 {
     double average {};
     int total {};
