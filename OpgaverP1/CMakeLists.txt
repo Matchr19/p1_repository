@@ -15,7 +15,6 @@ find_package(catkin REQUIRED
 
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  kobuki_msgs
 #  INCLUDE_DIRS include
 #  LIBRARIES Opgaver
 #  CATKIN_DEPENDS other_catkin_pkg
@@ -30,7 +29,6 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
  ${catkin_INCLUDE_DIRS}
- kobuki_msgs
 )
 
 
