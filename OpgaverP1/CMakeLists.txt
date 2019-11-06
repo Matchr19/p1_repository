@@ -9,11 +9,13 @@ add_compile_options(-std=c++11)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED
     roscpp
+    kobuki_msgs
 )
 
 
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
+  kobuki_msgs
 #  INCLUDE_DIRS include
 #  LIBRARIES Opgaver
 #  CATKIN_DEPENDS other_catkin_pkg
@@ -28,6 +30,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
  ${catkin_INCLUDE_DIRS}
+ kobuki_msgs
 )
 
 
@@ -117,6 +120,11 @@ set_target_properties(${PROJECT_NAME}_TreeSort PROPERTIES OUTPUT_NAME TreeSort P
 target_link_libraries(${PROJECT_NAME}_TreeSort
   ${catkin_LIBRARIES}
 )
+add_executable(${PROJECT_NAME}_test src/test.cpp)
+set_target_properties(${PROJECT_NAME}_test PROPERTIES OUTPUT_NAME test PREFIX "")
+target_link_libraries(${PROJECT_NAME}_test
+  ${catkin_LIBRARIES}
+)
 
 
 
@@ -142,6 +150,7 @@ target_link_libraries(${PROJECT_NAME}_TreeSort
  ${PROJECT_NAME}_Sorter
  ${PROJECT_NAME}_QuickSort
  ${PROJECT_NAME}_TreeSort
+ ${PROJECT_NAME}_test
 
  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
