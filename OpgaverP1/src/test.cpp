@@ -4,13 +4,9 @@
 
 
 
-void bump(const kobuki_msgs::BumperEvent& msg)
+void bump(const kobuki_msgs::BumperEvent::ConstPtr& msg)
 {
-    if(msg.state == 1)
-    {
-        ROS_INFO("JEG ER KØRT IND I NOGET");
-    }
-    ROS_INFO("JEG KØRER");
+   ROS_INFO("recieve msg = %d", msg->bumper);
 }
 
 
