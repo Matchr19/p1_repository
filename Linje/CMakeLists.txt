@@ -140,6 +140,11 @@ add_dependencies(${PROJECT_NAME}_pubsub ${${PROJECT_NAME}_EXPORTED_TARGETS} ${ca
 target_link_libraries(${PROJECT_NAME}_pubsub
 ${catkin_LIBRARIES}
 )
+add_executable(${PROJECT_NAME}_Bat src/Bat.cpp)
+add_dependencies(${PROJECT_NAME}_Bat ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(${PROJECT_NAME}_Bat
+${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##
