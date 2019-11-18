@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(lektion11)
+project(battery_check)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
@@ -30,12 +30,12 @@ target_link_libraries(${PROJECT_NAME}_battery
   ${catkin_LIBRARIES}
 )
 
-add_executable(${PROJECT_NAME}_NAME src/NAME.cpp)
-set_target_properties(${PROJECT_NAME}_NAME PROPERTIES OUTPUT_NAME NAME PREFIX "")
-target_link_libraries(${PROJECT_NAME}_NAME
-  ${catkin_LIBRARIES}
-)
 
+#add_executable(${PROJECT_NAME}_NAME src/NAME.cpp)
+#set_target_properties(${PROJECT_NAME}_NAME PROPERTIES OUTPUT_NAME NAME PREFIX "")
+#target_link_libraries(${PROJECT_NAME}_NAME
+#  ${catkin_LIBRARIES}
+#)
 
 
 #############
@@ -45,6 +45,6 @@ target_link_libraries(${PROJECT_NAME}_NAME
 # Mark executables for installation
 install(TARGETS
   ${PROJECT_NAME}_battery
-  ${PROJECT_NAME}_NAME
+#  ${PROJECT_NAME}_NAME
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
