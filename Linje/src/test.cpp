@@ -24,7 +24,8 @@ void bump(const kobuki_msgs::BumperEvent &msg)
             bumpertekst = " Right bumper";
         }
 
-        
+        system("rosnode kill pubsub");
+
 
         std::cout << "JEG ER KØRT IND I NOGET med:" << bumpertekst << std::endl;
         
