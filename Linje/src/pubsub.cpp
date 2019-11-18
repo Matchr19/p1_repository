@@ -4,44 +4,28 @@
 #include <iostream>
 #include <string>
 
-void stop(geometry_msgs::Twist &msg)
-{
-
-}
-
 void bump(const kobuki_msgs::BumperEvent &msg_sub)
 {
+    if (msg_sub.state == 1)
+    {
+        int bumpo = msg_sub.bumper;
+        std::string bumpertekst("");
+        if (bumpo == 0)
+        {
+            bumpertekst = " Left  bumper";
+        }
+        else if (bumpo == 1)
+        {
+            bumpertekst = " Center bumper";
+        }
+        else if (bumpo == 2)
+        {
+            bumpertekst = " Right bumper";
+        }
 
-    
+        std::cout << "JEG ER KØRT IND I NOGET med:" << bumpertekst << std::endl;
+    }
 }
-
-
-
-geometry_msgs::Twist drive(geometry_msgs::Twist &msg)
-{
-    
-    int drivenumb = rand() % 3;
-    if (drivenumb == 0)
-    {
-        msg.linear.x = 2;
-        msg.angular.z = 0;
-    }
-    else if (drivenumb == 1)
-    {
-        msg.linear.x = 0;
-        msg.angular.z = 2;
-    }
-    else if (drivenumb == 2)
-    {
-        msg.linear.x = 0;
-        msg.angular.z = -2;
-    }
-    
-    std::cout << "Linear: " << msg.linear.x << " " << "Angular: " << msg.angular.z << std::endl;
-    return msg;
-}
-
-
 
 int main(int argc, char *argv[])
 {
@@ -49,21 +33,36 @@ int main(int argc, char *argv[])
     srand(time(NULL));
     ros::NodeHandle n;
     ros::Rate loop_rate(0.4);
-    
-    
-    ros::Publisher cmd_vel_pub = n.advertise<geometry_msgs::Twist>("/cmd_vel_mux/input/teleop", 1, drive);
+
+    ros::Publisher cmd_vel_pub = n.advertise<geometry_msgs::Twist>("/cmd_vel_mux/input/teleop", 1);
     ros::Subscriber bumper_sub = n.subscribe("/mobile_base/events/bumper", 10, bump);
     geometry_msgs::Twist msg;
-    while(ros::ok())
+    while (ros::ok())
     {
-    
-    cmd_vel_pub.publish(drive(msg));
-    loop_rate.sleep();
-    
+        
 
+        int drivenumb = rand() % 3;
+        if (drivenumb == 0)
+        {
+            msg.linear.x = 0;
+            msg.angular.z = 0;
+        }
+        else if (drivenumb == 1)
+        {
+            msg.linear.x = 0;
+            msg.angular.z = 2;
+        }
+        else if (drivenumb == 2)
+        {
+            msg.linear.x = 0;
+            msg.angular.z = -2;
+        }
+        cmd_vel_pub.publish(msg);
+
+        std::cout << "Linear: " << msg.linear.x << " "
+                  << "Angular: " << msg.angular.z << std::endl;
+        loop_rate.sleep();
+        ros::spin();
     }
- 
-    
-    
     return 0;
 }
