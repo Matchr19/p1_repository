@@ -30,6 +30,20 @@ target_link_libraries(${PROJECT_NAME}_battery
   ${catkin_LIBRARIES}
 )
 
+# lige Executable
+add_executable(${PROJECT_NAME}_lige src/lige.cpp)
+set_target_properties(${PROJECT_NAME}_lige PROPERTIES OUTPUT_NAME lige PREFIX "")
+target_link_libraries(${PROJECT_NAME}_lige
+  ${catkin_LIBRARIES}
+)
+
+# ny Executable
+add_executable(${PROJECT_NAME}_ny src/ny.cpp)
+set_target_properties(${PROJECT_NAME}_ny PROPERTIES OUTPUT_NAME ny PREFIX "")
+target_link_libraries(${PROJECT_NAME}_ny
+  ${catkin_LIBRARIES}
+)
+
 
 #add_executable(${PROJECT_NAME}_NAME src/NAME.cpp)
 #set_target_properties(${PROJECT_NAME}_NAME PROPERTIES OUTPUT_NAME NAME PREFIX "")
@@ -45,6 +59,8 @@ target_link_libraries(${PROJECT_NAME}_battery
 # Mark executables for installation
 install(TARGETS
   ${PROJECT_NAME}_battery
+  ${PROJECT_NAME}_lige
+  ${PROJECT_NAME}_ny
 #  ${PROJECT_NAME}_NAME
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

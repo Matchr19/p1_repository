@@ -15,9 +15,11 @@
     std::cout << "Batteri: " << res << "%" << std::endl;
     std::cout << "-----------------------------------------------" << std::endl;
 
-    if (res < 30)                         //hvis batteriprocenten er under 30%
+    if (res < 94)                         //hvis batteriprocenten er under 30%
     {
       std::cout << "STIK MIG EN ØL" << std::endl;
+      system("rosnode kill lige");        //stopper cpp'en "lige"
+      system("rosrun battery_check ny");  //starter cpp'en "ny"
     }
   }
  
