@@ -7,10 +7,11 @@
 
 geometry_msgs::Twist drive(geometry_msgs::Twist &msg)
 {
-        msg.angular.z = 2;
+        msg.angular.z = 3;
     
     
     std::cout << "Jeg drejer rundt med: " << msg.angular.z << " km/t" << std::endl;
+    std::cout << "Undskyld, men hvor er rum 3 henne?" << std::endl;
     return msg;
 }
 
@@ -18,7 +19,7 @@ geometry_msgs::Twist drive(geometry_msgs::Twist &msg)
 
 int main(int argc, char *argv[])
 {
-    ros::init(argc, argv, "lige");
+    ros::init(argc, argv, "room3");
     srand(time(NULL));
     ros::NodeHandle n;
     ros::Rate loop_rate(1000);

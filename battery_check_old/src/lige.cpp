@@ -7,10 +7,13 @@
 
 geometry_msgs::Twist drive(geometry_msgs::Twist &msg)
 {
+    
+   
+        msg.linear.x = 0;
         msg.angular.z = 2;
     
     
-    std::cout << "Jeg drejer rundt med: " << msg.angular.z << " km/t" << std::endl;
+    std::cout << "Linear: " << msg.linear.x << " " << "Angular: " << msg.angular.z << std::endl;
     return msg;
 }
 

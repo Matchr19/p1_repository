@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(battery_check)
+project(rooms)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
@@ -23,24 +23,24 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-# battery Executable
-add_executable(${PROJECT_NAME}_battery src/battery.cpp)
-set_target_properties(${PROJECT_NAME}_battery PROPERTIES OUTPUT_NAME battery PREFIX "")
-target_link_libraries(${PROJECT_NAME}_battery
+# room1 Executable
+add_executable(${PROJECT_NAME}_room1 src/room1.cpp)
+set_target_properties(${PROJECT_NAME}_room1 PROPERTIES OUTPUT_NAME room1 PREFIX "")
+target_link_libraries(${PROJECT_NAME}_room1
   ${catkin_LIBRARIES}
 )
 
-# lige Executable
-add_executable(${PROJECT_NAME}_lige src/lige.cpp)
-set_target_properties(${PROJECT_NAME}_lige PROPERTIES OUTPUT_NAME lige PREFIX "")
-target_link_libraries(${PROJECT_NAME}_lige
+# room2 Executable
+add_executable(${PROJECT_NAME}_room2 src/room2.cpp)
+set_target_properties(${PROJECT_NAME}_room2 PROPERTIES OUTPUT_NAME room2 PREFIX "")
+target_link_libraries(${PROJECT_NAME}_room2
   ${catkin_LIBRARIES}
 )
 
-# ny Executable
-add_executable(${PROJECT_NAME}_ny src/ny.cpp)
-set_target_properties(${PROJECT_NAME}_ny PROPERTIES OUTPUT_NAME ny PREFIX "")
-target_link_libraries(${PROJECT_NAME}_ny
+# room3 Executable
+add_executable(${PROJECT_NAME}_room3 src/room3.cpp)
+set_target_properties(${PROJECT_NAME}_room3 PROPERTIES OUTPUT_NAME room3 PREFIX "")
+target_link_libraries(${PROJECT_NAME}_room3
   ${catkin_LIBRARIES}
 )
 
@@ -58,9 +58,9 @@ target_link_libraries(${PROJECT_NAME}_ny
 
 # Mark executables for installation
 install(TARGETS
-  ${PROJECT_NAME}_battery
-  ${PROJECT_NAME}_lige
-  ${PROJECT_NAME}_ny
+  ${PROJECT_NAME}_room1
+  ${PROJECT_NAME}_room2
+  ${PROJECT_NAME}_room3
 #  ${PROJECT_NAME}_NAME
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

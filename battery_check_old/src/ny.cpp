@@ -7,10 +7,13 @@
 
 geometry_msgs::Twist drive(geometry_msgs::Twist &msg)
 {
-        msg.angular.z = 2;
+    
+   
+        msg.linear.x = 0;
+        msg.angular.z = -4;
     
     
-    std::cout << "Jeg drejer rundt med: " << msg.angular.z << " km/t" << std::endl;
+    std::cout << "Linear: " << msg.linear.x << " " << "Angular: " << msg.angular.z << std::endl;
     return msg;
 }
 
@@ -18,7 +21,7 @@ geometry_msgs::Twist drive(geometry_msgs::Twist &msg)
 
 int main(int argc, char *argv[])
 {
-    ros::init(argc, argv, "lige");
+    ros::init(argc, argv, "ny");
     srand(time(NULL));
     ros::NodeHandle n;
     ros::Rate loop_rate(1000);
