@@ -2,12 +2,12 @@ cmake_minimum_required(VERSION 2.8.3)
 project(Linje)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+ add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp kobuki_msgs geometry_msgs ) 
+find_package(catkin REQUIRED COMPONENTS roscpp kobuki_msgs geometry_msgs nav_msgs std_msgs move_base_msgs) 
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -101,7 +101,7 @@ find_package(catkin REQUIRED COMPONENTS roscpp kobuki_msgs geometry_msgs )
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES Linje
-CATKIN_DEPENDS kobuki_msgs roscpp geometry_msgs
+CATKIN_DEPENDS kobuki_msgs roscpp geometry_msgs nav_msgs std_msgs move_base_msgs
 #  DEPENDS system_lib
 )
 
@@ -151,6 +151,18 @@ add_dependencies(${PROJECT_NAME}_Bat ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catki
 target_link_libraries(${PROJECT_NAME}_Bat
 ${catkin_LIBRARIES}
 )
+
+#add_executable(${PROJECT_NAME}_andreas src/andreas.cpp)
+#add_dependencies(${PROJECT_NAME}_andreas ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries(${PROJECT_NAME}_andreas
+#${catkin_LIBRARIES}
+#)
+
+#add_executable(${PROJECT_NAME}_andreas2 src/andreas2.cpp)
+#add_dependencies(${PROJECT_NAME}_andreas2 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries(${PROJECT_NAME}_andreas2
+#${catkin_LIBRARIES}
+#)
 
 #############
 ## Install ##
