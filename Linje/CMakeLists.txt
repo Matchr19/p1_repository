@@ -135,6 +135,12 @@ target_link_libraries(${PROJECT_NAME}_test
 ${catkin_LIBRARIES}
 )
 
+add_executable(${PROJECT_NAME}_rundt src/rundt.cpp)
+add_dependencies(${PROJECT_NAME}_rundt ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(${PROJECT_NAME}_rundt
+${catkin_LIBRARIES}
+)
+
 add_executable(${PROJECT_NAME}_pubsub src/pubsub.cpp)
 add_dependencies(${PROJECT_NAME}_pubsub ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(${PROJECT_NAME}_pubsub

@@ -1,16 +1,23 @@
 #include <iostream>
 #include <ros/ros.h>
-#include <kobuki_msgs/Buttonevent>
+#include <kobuki_msgs/ButtonEvent.h>
 #include <std_msgs/String.h>
 
 
- void recallCallback(const kobuki_msgs:: msg)
+ void recallCallback(const kobuki_msgs:: ButtonEvent &msg)
   {
-    buttonstate= msg.button1;
+    int buttonstate=0;
+    
+    buttonstate= msg.Button1;
+
+    //This funktion opens busroute, in addition to recall the robot to the basis point from the picked point
 
     if (buttonstate==1){
 
-        system("roslaunch turtlebot_gmapping.launch")
+        std::cout << "The button is on"<< std::endl;
+
+
+        system("");
 
     }
 
@@ -24,11 +31,11 @@
   
     ros::NodeHandle n;
  
-   
-    ros::Publisher Pub = n.advertise("/mobile_base_nodelet_manager", 1000, recallCallback);
+    ros::Publisher cmd_vel_pub = n.advertise<kobuki_msgs::ButtonEvent>("/mobile_base_nodelet_manager", 100);
 
-  
-    ros::spin();
+    kobuki_msgs::ButtonEvent msg;
+
+    ros::Rate loop_rate(10);
 
      return 0;
   }
