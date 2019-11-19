@@ -19,33 +19,25 @@ void sendPub(double ligeud, double drej)
 
 void drive()
 {
-    std::string Retning {""};
-    std::cout << "\n\n\n\n\n\n\n\nWhere should i go?" << std::endl;
-    std::cout << "You have the following options: " << std::endl;
-    std::cout << "Left" << std::endl << "Straight" << std::endl << "Right\n\n\n\n\n" << std::endl << "Input: ";
-    std::cin >> Retning;
-    
-    std::cout << "Going " << Retning << std::endl;
-
 
     double x {};
     double y {};
-    if (Retning == "Straight")
+    int drivenumb = rand() % 3;
+    if (drivenumb == 0)
+    {
+        x = 0.5;
+        y = 0;
+    }
+    else if (drivenumb == 1)
     {
         x = 0.2;
-        y = 0.;
-    }
-    else if (Retning == "Left")
-    {
-        x = 0.1;
         y = 0.5;
     }
-    else if (Retning == "Right")
+    else if (drivenumb == 2)
     {
-        x = 0.1;  
+        x = 0.2;  
         y = -0.5;
     }
-    
     
     sendPub(x, y);   
         
@@ -58,51 +50,32 @@ void bump(const kobuki_msgs::BumperEvent &bumpMsg)
     {
         int bumpo = bumpMsg.bumper;
         std::string bumpertekst("");
-        if (bumpo == 0)
-        {
-            bumpertekst = " Left  bumper";
-        }
-        else if (bumpo == 1)
-        {
-            bumpertekst = " Center bumper";
-        }
-        else if (bumpo == 2)
-        {
-            bumpertekst = " Right bumper";
-        }
+       
         
-        sendPub(0, 5);
-        ros::spinOnce();
-        
-
-
-
-
-
-        std::cout << "\n\n\n\n\n\nWOOOOOPS you drove me into something with: " << bumpertekst << std::endl
-        << "Turning around\n\n";
+        sendPub(0, 10);
+        std::cout << "JEG ER KØRT IND I NOGET med:" << std::endl;
         
     } 
     else
     {
         drive();
-        ros::spinOnce();
+        
     }
 }
 
 
 int main(int argc, char *argv[])
-{
+{ 
     ros::init(argc, argv, "pubsub");
     srand(time(NULL));
     ros::NodeHandle n;
     ros::Rate loop_rate(0.4);
     cmd_vel_pub = n.advertise<geometry_msgs::Twist>("/cmd_vel_mux/input/teleop", 1);
-    ros::Subscriber bumperSub = n.subscribe("/mobile_base/events/bumper", 1, bump);
+    ros::Subscriber bumperSub = n.subscribe("/mobile_base/events/bumper", 5, bump);
     while(ros::ok())
     {
+    std::cout << "Jeg er kommet ind i loopet" << std::endl;
     bump(bumpMsg);
-    ros::spinOnce();
     loop_rate.sleep();
     }
     return 0;
