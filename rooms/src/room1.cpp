@@ -1,30 +1,32 @@
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
-#include <iostream>
+#include <math.h>
 
-geometry_msgs::Twist drive(geometry_msgs::Twist &msg)
+int main(int argc, char **argv)
 {
-    msg.angular.z = 1;
-    std::cout << "Jeg er på vej til rum 1 med, " << msg.angular.z << " km/t." << std::endl;
-    return msg;
+const double PI = 3.14159265358979323846;
+
+ros::init(argc, argv, "room1");
+ros::NodeHandle n;
+ros::Publisher movement_pub = n.advertise<geometry_msgs::Twist>("mobile_base/commands/velocity",1); //for sensors the value after , should be higher to get a more accurate result (queued)
+ros::Rate rate(10); //the larger the value, the "smoother" , try value of 1 to see "jerk" movement
+
+std::cout << "Kører til rum 1" << std::endl;
+
+//turn right
+ros::Time start_turn = ros::Time::now();
+while(ros::Time::now() - start_turn < ros::Duration(20.0))
+{
+    geometry_msgs::Twist move;
+    //velocity controls
+    move.linear.x = 0; //speed value m/s
+    move.angular.z = -1;
+    movement_pub.publish(move);
+
+    ros::spinOnce();
+    rate.sleep();
 }
 
 
-
-int main(int argc, char *argv[])
-{
-    ros::init(argc, argv, "room1");
-    ros::NodeHandle n;
-    ros::Rate loop_rate(10);
-    
-    ros::Publisher cmd_vel_pub = n.advertise<geometry_msgs::Twist>("/cmd_vel_mux/input/teleop", 1, drive);
-    geometry_msgs::Twist msg;
-
-    while(ros::ok())
-    {
-    cmd_vel_pub.publish(drive(msg));
-    loop_rate.sleep();
-    }
- 
-    return 0;
+return 0;
 }
