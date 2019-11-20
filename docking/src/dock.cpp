@@ -6,6 +6,7 @@
 int main()
 {
     system("roslaunch kobuki_auto_docking minimal.launch --screen");
+    //åben ny terminal
     system("roslaunch kobuki_auto_docking activate.launch --screen");
 
     return 0;
