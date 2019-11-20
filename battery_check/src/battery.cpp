@@ -13,18 +13,15 @@
     int ska = 100.0/3.3;                   //skalar for %-udregningen
     float ver = bat-13.0;                  //værdi for batteriets kapacitet hvis 13v er 0%
     float res = ska*ver;                   //resultatet for udregningen
-    std::string rum = "lige";                      //funktionen der skal subscribe på hvor den skal hen
+    std::string rum = "lige";              //funktionen der skal subscribe på hvor den skal hen
     std::cout << std::endl;
     std::cout << "Batteri: " << res << "%" << std::endl;
     std::cout << "-----------------------------------------------" << std::endl;
 
-    if (res < 70)                          //hvis batteriprocenten er under 30% så:
+    if (res < 70)                          //hvis batteriprocenten er under 70% så:
     {
-      system("rosnode kill room1");        //stopper cpp'en "lige"
-      system("rosrun rrooms rroom1");      //starter cpp'en "ny"
-      //når done:
-      //system("roslaunch kobuki_auto_docking minimal.launch --screen")
-      //system("roslaunch kobuki_auto_docking activate.launch --screen")
+      system("rosnode kill room1");        //stopper cpp'en "room1"
+      system("rosrun rrooms rroom1");      //starter cpp'en "rroom1"
     }
   }
  
@@ -42,6 +39,6 @@
   
     ros::spin();
 
-     return 0;
+    return 0;
   }
 
