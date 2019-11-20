@@ -152,6 +152,18 @@ target_link_libraries(${PROJECT_NAME}_Bat
 ${catkin_LIBRARIES}
 )
 
+add_executable(${PROJECT_NAME}_vacuum src/vacuum.cpp)
+add_dependencies(${PROJECT_NAME}_vacuum ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(${PROJECT_NAME}_vacuum
+${catkin_LIBRARIES}
+)
+
+add_executable(${PROJECT_NAME}_vacuum2 src/vacuum2.cpp)
+add_dependencies(${PROJECT_NAME}_vacuum2 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(${PROJECT_NAME}_vacuum2
+${catkin_LIBRARIES}
+)
+
 #add_executable(${PROJECT_NAME}_andreas src/andreas.cpp)
 #add_dependencies(${PROJECT_NAME}_andreas ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 #target_link_libraries(${PROJECT_NAME}_andreas
