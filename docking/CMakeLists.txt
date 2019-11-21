@@ -30,6 +30,13 @@ target_link_libraries(${PROJECT_NAME}_dock
   ${catkin_LIBRARIES}
 )
 
+# call_dock Executable
+add_executable(${PROJECT_NAME}_call_dock src/call_dock.cpp)
+set_target_properties(${PROJECT_NAME}_call_dock PROPERTIES OUTPUT_NAME call_dock PREFIX "")
+target_link_libraries(${PROJECT_NAME}_call_dock
+  ${catkin_LIBRARIES}
+)
+
 #add_executable(${PROJECT_NAME}_NAME src/NAME.cpp)
 #set_target_properties(${PROJECT_NAME}_NAME PROPERTIES OUTPUT_NAME NAME PREFIX "")
 #target_link_libraries(${PROJECT_NAME}_NAME
@@ -44,6 +51,7 @@ target_link_libraries(${PROJECT_NAME}_dock
 # Mark executables for installation
 install(TARGETS
   ${PROJECT_NAME}_dock
+  ${PROJECT_NAME}_call_dock
 #  ${PROJECT_NAME}_NAME
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

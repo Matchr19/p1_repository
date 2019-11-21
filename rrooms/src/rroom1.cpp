@@ -4,7 +4,7 @@
 #include <sstream>
 #include "std_msgs/String.h"
 
-
+/*
 int pub(int argc, char **argv)
 {
     ros::init(argc, argv, "rroom1_pub");
@@ -29,7 +29,7 @@ int pub(int argc, char **argv)
     return 0;
     
 }
-
+*/
 
 int main(int argc, char **argv)
 {
@@ -45,7 +45,7 @@ std::cout << "Kører hjem fra rum 1" << std::endl;
 //turn left
 ros::Time start_turn = ros::Time::now();
 while(ros::Time::now() - start_turn < ros::Duration(20.0))
-{
+    {
     geometry_msgs::Twist move;
     //velocity controls
     move.angular.z = 1;             //speed value m/s
@@ -53,11 +53,13 @@ while(ros::Time::now() - start_turn < ros::Duration(20.0))
 
     ros::spinOnce();
     rate.sleep();
-}
+    }
 
     std::cout << "Jeg er i nærheden af laderstationen" << std::endl;
 
-return 0;
+    system ("rosrun docking dock");
+
+    return 0;
 }
 
 
