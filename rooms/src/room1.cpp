@@ -27,6 +27,7 @@ while(ros::Time::now() - start_turn < ros::Duration(20.0))
     rate.sleep();
 }
 
+std::cout << "Nu er jeg her." << std::endl;
 
 return 0;
 }
