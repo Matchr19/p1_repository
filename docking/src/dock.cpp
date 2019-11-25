@@ -2,8 +2,6 @@
 #include <ros/ros.h>
 #include <stdlib.h>
 
-//Subscribe på rroom1, rroom2 og rroom3. Når DONE-besked kommer kør:
-
 
 
 int main(void) 
