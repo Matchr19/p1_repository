@@ -31,18 +31,18 @@ target_link_libraries(${PROJECT_NAME}_rroom1
 )
 
 # rroom2 Executable
-add_executable(${PROJECT_NAME}_rroom2 src/rroom2.cpp)
-set_target_properties(${PROJECT_NAME}_rroom2 PROPERTIES OUTPUT_NAME rroom2 PREFIX "")
-target_link_libraries(${PROJECT_NAME}_rroom2
-  ${catkin_LIBRARIES}
-)
+#add_executable(${PROJECT_NAME}_rroom2 src/rroom2.cpp)
+#set_target_properties(${PROJECT_NAME}_rroom2 PROPERTIES OUTPUT_NAME rroom2 PREFIX "")
+#target_link_libraries(${PROJECT_NAME}_rroom2
+#  ${catkin_LIBRARIES}
+#)
 
 # rroom3 Executable
-add_executable(${PROJECT_NAME}_rroom3 src/rroom3.cpp)
-set_target_properties(${PROJECT_NAME}_rroom3 PROPERTIES OUTPUT_NAME rroom3 PREFIX "")
-target_link_libraries(${PROJECT_NAME}_rroom3
-  ${catkin_LIBRARIES}
-)
+#add_executable(${PROJECT_NAME}_rroom3 src/rroom3.cpp)
+#set_target_properties(${PROJECT_NAME}_rroom3 PROPERTIES OUTPUT_NAME rroom3 PREFIX "")
+#target_link_libraries(${PROJECT_NAME}_rroom3
+#  ${catkin_LIBRARIES}
+#)
 
 
 #add_executable(${PROJECT_NAME}_NAME src/NAME.cpp)
@@ -59,8 +59,8 @@ target_link_libraries(${PROJECT_NAME}_rroom3
 # Mark executables for installation
 install(TARGETS
   ${PROJECT_NAME}_rroom1
-  ${PROJECT_NAME}_rroom2
-  ${PROJECT_NAME}_rroom3
+  #${PROJECT_NAME}_rroom2
+  #${PROJECT_NAME}_rroom3
 #  ${PROJECT_NAME}_NAME
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
