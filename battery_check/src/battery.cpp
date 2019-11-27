@@ -21,7 +21,7 @@
     if (res < 70)                          //hvis batteriprocenten er under 70% så:
     {
       system("rosnode kill room1");        //stopper cpp'en "room1"
-      system("rosrun rrooms rroom1");      //starter cpp'en "rroom1"
+      system("rosrun rrooms rroom1");      //starter cpp'en "rroom1"'
       //DETTE IF-STATEMENT BLIVER:
       //SEND MSG "FUCK JEG ER TØRSTIG" I EN TOPIC battery_topic
       //I RUM-NODEN SUBSCRIBER DEN PÅ battery_topic OG STOPPER SÅ
