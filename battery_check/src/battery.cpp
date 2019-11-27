@@ -22,6 +22,11 @@
     {
       system("rosnode kill room1");        //stopper cpp'en "room1"
       system("rosrun rrooms rroom1");      //starter cpp'en "rroom1"
+      //DETTE IF-STATEMENT BLIVER:
+      //SEND MSG "FUCK JEG ER TØRSTIG" I EN TOPIC battery_topic
+      //I RUM-NODEN SUBSCRIBER DEN PÅ battery_topic OG STOPPER SÅ
+      //ARRAY'ET, TÆLLER HVOR LANGT DEN ER OG KØRER SÅ ARRAY'ET
+      //BAGLÆNS FRA HVOR DEN ER KOMMET TIL I DET
     }
   }
  
