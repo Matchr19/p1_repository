@@ -1,0 +1,101 @@
+#include "ros/ros.h"
+#include "geometry_msgs/Twist.h"
+#include "nav_msgs/Odometry.h"
+#include <std_msgs/String.h>
+
+#include <tf/tf.h>
+#include <geometry_msgs/Pose2D.h>
+
+geometry_msgs::Twist vmsg;
+ros::Publisher cmd_vel_pub;
+
+double rotationSpeed = 0.5;              // radians/s
+double numberOfRadiansToTurn = 2 * M_PI; // number of radians turn
+
+    bool startPosSet = false;
+bool firstTimeOri = true;
+double startOrientation = 0;   // In radians
+double currentOrientation = 0; // In radians
+double numberOfRadiansTurned = 0;
+
+void turn()
+{
+    vmsg.angular.z = rotationSpeed;
+    while (ros::ok() && numberOfRadiansToTurn >=
+                            numberOfRadiansTurned)
+    {
+
+        if (numberOfRadiansToTurn - numberOfRadiansTurned < M_PI / 4)
+        {
+            vmsg.angular.z = 0.2; // radians/s
+        }
+
+        cmd_vel_pub.publish(vmsg);  // publishes the velocity command
+        ros::Duration(0.1).sleep(); // sleeps for 0.1 sec.
+        ros::spinOnce();
+    }
+
+    vmsg.angular.z = 0.0;
+    cmd_vel_pub.publish(vmsg);
+}
+
+void odomCallback(const nav_msgs::Odometry::ConstPtr &msg)
+{
+
+    tf::Quaternion q(
+        msg->pose.pose.orientation.x,
+        msg->pose.pose.orientation.y,
+        msg->pose.pose.orientation.z,
+        msg->pose.pose.orientation.w);
+    tf::Matrix3x3 m(q);
+    double roll, pitch, yaw;
+    m.getRPY(roll, pitch, yaw);
+
+    double ori = yaw; // In radians
+    if (ori < 0)
+    {
+        ori = 2 * M_PI + ori;
+    }
+
+    if (!startPosSet)
+    {
+        startOrientation = ori;
+        startPosSet = true;
+    }
+
+    double oldOrientation = currentOrientation;
+    if (oldOrientation < ori)
+    {
+        numberOfRadiansTurned = numberOfRadiansTurned + ori - currentOrientation;
+    }
+    else
+    {
+        numberOfRadiansTurned = numberOfRadiansTurned + 2 * M_PI - currentOrientation + ori;
+    }
+    if (firstTimeOri)
+    {
+        numberOfRadiansTurned = numberOfRadiansTurned - ori;
+        firstTimeOri = false;
+    }
+
+    currentOrientation = ori;
+
+    ROS_INFO("current orientation: %f", currentOrientation);
+    ROS_INFO("number of radians turned: %f", numberOfRadiansTurned);
+}
+
+int main(int argc, char **argv)
+{
+    ros::init(argc, argv, "around");
+
+    ros::NodeHandle n;
+
+    cmd_vel_pub = n.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop", 2);
+    ros::Subscriber subOdom = n.subscribe("odom", 1, odomCallback);
+
+    ros::spinOnce();
+
+    turn();
+
+    return 0;
+}

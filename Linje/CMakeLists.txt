@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(pkg1)
+project(Linje)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-add_compile_options(-std=c++11)
+ add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp kobuki_msgs) 
+find_package(catkin REQUIRED COMPONENTS roscpp kobuki_msgs geometry_msgs nav_msgs std_msgs move_base_msgs) 
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -101,7 +101,7 @@ find_package(catkin REQUIRED COMPONENTS roscpp kobuki_msgs)
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES Linje
-CATKIN_DEPENDS kobuki_msgs roscpp geometry_msgs
+CATKIN_DEPENDS kobuki_msgs roscpp geometry_msgs nav_msgs std_msgs move_base_msgs
 #  DEPENDS system_lib
 )
 
@@ -129,12 +129,52 @@ ${catkin_INCLUDE_DIRS}
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(${PROJECT_NAME}_recall_1point src/recall_1point.cpp)
-add_dependencies(${PROJECT_NAME}_recall_1point ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(${PROJECT_NAME}_recall_1point
+add_executable(${PROJECT_NAME}_test src/test.cpp)
+add_dependencies(${PROJECT_NAME}_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(${PROJECT_NAME}_test
 ${catkin_LIBRARIES}
 )
 
+add_executable(${PROJECT_NAME}_rundt src/rundt.cpp)
+add_dependencies(${PROJECT_NAME}_rundt ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(${PROJECT_NAME}_rundt
+${catkin_LIBRARIES}
+)
+
+add_executable(${PROJECT_NAME}_pubsub src/pubsub.cpp)
+add_dependencies(${PROJECT_NAME}_pubsub ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(${PROJECT_NAME}_pubsub
+${catkin_LIBRARIES}
+)
+add_executable(${PROJECT_NAME}_Bat src/Bat.cpp)
+add_dependencies(${PROJECT_NAME}_Bat ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(${PROJECT_NAME}_Bat
+${catkin_LIBRARIES}
+)
+
+add_executable(${PROJECT_NAME}_vacuum src/vacuum.cpp)
+add_dependencies(${PROJECT_NAME}_vacuum ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(${PROJECT_NAME}_vacuum
+${catkin_LIBRARIES}
+)
+
+add_executable(${PROJECT_NAME}_vacuum2 src/vacuum2.cpp)
+add_dependencies(${PROJECT_NAME}_vacuum2 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(${PROJECT_NAME}_vacuum2
+${catkin_LIBRARIES}
+)
+
+#add_executable(${PROJECT_NAME}_andreas src/andreas.cpp)
+#add_dependencies(${PROJECT_NAME}_andreas ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries(${PROJECT_NAME}_andreas
+#${catkin_LIBRARIES}
+#)
+
+#add_executable(${PROJECT_NAME}_andreas2 src/andreas2.cpp)
+#add_dependencies(${PROJECT_NAME}_andreas2 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries(${PROJECT_NAME}_andreas2
+#${catkin_LIBRARIES}
+#)
 
 #############
 ## Install ##
@@ -179,14 +219,14 @@ ${catkin_LIBRARIES}
 # )
 
 #############
-## recall_1_recall_1pointing ##
+## Testing ##
 #############
 
-## Add grecall_1_recall_1point based cpp recall_1_recall_1point target and link libraries
-# catkin_add_grecall_1_recall_1point(${PROJECT_NAME}-recall_1_recall_1point recall_1_recall_1point/recall_1_recall_1point_Linje.cpp)
-# if(TARGET ${PROJECT_NAME}-recall_1_recall_1point)
-#   target_link_libraries(${PROJECT_NAME}-recall_1_recall_1point ${PROJECT_NAME})
+## Add gtest based cpp test target and link libraries
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_Linje.cpp)
+# if(TARGET ${PROJECT_NAME}-test)
+#   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
 
-## Add folders to be run by python noserecall_1_recall_1points
-# catkin_add_noserecall_1_recall_1points(recall_1_recall_1point)
+## Add folders to be run by python nosetests
+# catkin_add_nosetests(test)
