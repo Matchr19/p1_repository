@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(camera)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -15,7 +15,7 @@ std_msgs
 image_transport
   )
 
-  find_package(OpenCV REQUIRED)
+  find_package(OpenCV 2 REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -109,8 +109,12 @@ image_transport
 catkin_package(
     INCLUDE_DIRS
     CATKIN_DEPENDS 
-    
-  )
+    sensor_msgs
+    cv_bridge
+    roscpp
+    std_msgs
+    image_transport
+    )
 
 ###########
 ## Build ##
