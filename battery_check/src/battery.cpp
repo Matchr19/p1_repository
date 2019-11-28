@@ -18,7 +18,7 @@
     std::cout << "Batteri: " << res << "%" << std::endl;
     std::cout << "-----------------------------------------------" << std::endl;
 
-    if (res < 70)                          //hvis batteriprocenten er under 70% så:
+    if (res < 85)                          //hvis batteriprocenten er under 70% så:
     {
       system("rosnode kill room1");        //stopper cpp'en "room1"
       system("rosrun rrooms rroom1");      //starter cpp'en "rroom1"
