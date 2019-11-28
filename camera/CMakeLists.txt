@@ -153,7 +153,7 @@ include_directories(
 #   ${catkin_LIBRARIES}
 # )
 add_executable(starttest src/starttest.cpp)
-target_link_libraries(starttest ${catkin_LIBRARIES})
+target_link_libraries(starttest ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
 #add_executable(opencvtest src/opencvtest.cpp)
 #target_link_libraries(opencvtest ${catkin_LIBRARIES} ${OpenCV_INCLUDE_DIRS})
