@@ -15,7 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
     image_transport
   )
 
-  find_package(OpenCV 2 REQUIRED)
+  find_package(OpenCV REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -158,8 +158,9 @@ include_directories(
 add_executable(starttest src/starttest.cpp)
 target_link_libraries(starttest ${catkin_LIBRARIES})
 
-add_executable(opencvtest src/opencvtest.cpp)
-target_link_libraries(opencvtest ${catkin_LIBRARIES} ${OpenCV_INCLUDE_DIRS})
+#add_executable(opencvtest src/opencvtest.cpp)
+#target_link_libraries(opencvtest ${catkin_LIBRARIES} ${OpenCV_INCLUDE_DIRS})
+
 #############
 ## Install ##
 #############
