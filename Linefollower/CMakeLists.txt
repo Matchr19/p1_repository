@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(line_follower_turtlebot)
+project(Linefollower)
 
 add_definitions(-std=c++11)
 
@@ -22,11 +22,11 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 
 add_executable(detect src/detect.cpp src/linedetect.cpp)
 target_link_libraries(detect ${catkin_LIBRARIES} ${OpenCV_LIBS})
-add_dependencies(detect line_follower_turtlebot_generate_messages_cpp)
+#add_dependencies(detect line_follower_turtlebot_generate_messages_cpp)
 
 add_executable(navig src/motion_node.cpp src/turtlebot.cpp)
 target_link_libraries(navig ${catkin_LIBRARIES})
-add_dependencies(navig line_follower_turtlebot_generate_messages_cpp)
+#add_dependencies(navig line_follower_turtlebot_generate_messages_cpp)
 
 if(CATKIN_ENABLE_TESTING)
   find_package(rostest REQUIRED)
