@@ -8,11 +8,11 @@ project(camera)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-    roscpp
-    sensor_msgs
-    std_msgs
-    cv_bridge
-    image_transport
+sensor_msgs
+cv_bridge
+roscpp
+std_msgs
+image_transport
   )
 
   find_package(OpenCV REQUIRED)
@@ -108,11 +108,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
     INCLUDE_DIRS
-    CATKIN_DEPENDS roscpp
-                   sensor_msgs
-                   std_msgs
-                   cv_bridge
-                   image_transport
+    CATKIN_DEPENDS 
+    
   )
 
 ###########
