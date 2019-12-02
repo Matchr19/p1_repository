@@ -16,16 +16,10 @@
     std::cout << "\nBatteri: " << res << "%" << std::endl;
     std::cout << "-----------------------------------------------" << std::endl;
 
-    if (res < 85)                          //hvis batteriprocenten er under 70% så:
+    if (res < 30)                          //hvis batteriprocenten er under 70% så:
     {
-      system("rosnode kill room1");        //stopper cpp'en "room1"
-      system("rosrun rrooms rroom1");      //starter cpp'en "rroom1"'
-      //DETTE IF-STATEMENT BLIVER:
-      //SEND MSG "FUCK JEG ER TØRSTIG" I EN TOPIC battery_topic
-      //I RUM-NODEN SUBSCRIBER DEN PÅ battery_topic OG STOPPER SÅ
-      //ARRAY'ET, TÆLLER HVOR LANGT DEN ER OG KØRER SÅ ARRAY'ET
-      //BAGLÆNS FRA HVOR DEN ER KOMMET TIL I DET
-    }
+      
+    }  
   }
  
  int main(int argc, char **argv)
@@ -35,6 +29,12 @@
     ros::NodeHandle n;
  
     ros::Subscriber sub = n.subscribe("/mobile_base/sensors/core", 10, batteryCallback);
+  
+    ros::Publisher lav_batteri_pub = n.advertise<std_msgs::String>("lav_batteri",1);
+
+    ros::Rate loop_rate(1);
+
+    int count = 0;
 
     ros::spin();
 
