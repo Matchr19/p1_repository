@@ -30,6 +30,13 @@ target_link_libraries(${PROJECT_NAME}_pubba
   ${catkin_LIBRARIES}
 )
 
+# subba Executable
+add_executable(${PROJECT_NAME}_subba src/subba.cpp)
+set_target_properties(${PROJECT_NAME}_subba PROPERTIES OUTPUT_NAME subba PREFIX "")
+target_link_libraries(${PROJECT_NAME}_subba
+  ${catkin_LIBRARIES}
+)
+
 #add_executable(${PROJECT_NAME}_NAME src/NAME.cpp)
 #set_target_properties(${PROJECT_NAME}_NAME PROPERTIES OUTPUT_NAME NAME PREFIX "")
 #target_link_libraries(${PROJECT_NAME}_NAME
@@ -44,6 +51,7 @@ target_link_libraries(${PROJECT_NAME}_pubba
 # Mark executables for installation
 install(TARGETS
   ${PROJECT_NAME}_pubba
+  ${PROJECT_NAME}_subba
   #  ${PROJECT_NAME}_NAME
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
