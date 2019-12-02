@@ -7,7 +7,7 @@ add_compile_options(-std=c++11)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp kobuki_msgs) 
+find_package(catkin REQUIRED COMPONENTS roscpp kobuki_msgs geometry_msgs nav_msgs std_msgs move_base_msgs) 
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -101,7 +101,7 @@ find_package(catkin REQUIRED COMPONENTS roscpp kobuki_msgs)
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES Linje
-CATKIN_DEPENDS kobuki_msgs roscpp geometry_msgs
+CATKIN_DEPENDS kobuki_msgs roscpp geometry_msgs nav_msgs std_msgs move_base_msgs
 #  DEPENDS system_lib
 )
 
@@ -135,7 +135,17 @@ target_link_libraries(${PROJECT_NAME}_recall_1point
 ${catkin_LIBRARIES}
 )
 
+add_executable(${PROJECT_NAME}_linedriving src/linedriving.cpp)
+add_dependencies(${PROJECT_NAME}_linedriving ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(${PROJECT_NAME}_linedriving
+${catkin_LIBRARIES}
+)
 
+add_executable(${PROJECT_NAME}_plugged src/plugged.cpp)
+add_dependencies(${PROJECT_NAME}_plugged ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(${PROJECT_NAME}_plugged
+${catkin_LIBRARIES}
+)
 #############
 ## Install ##
 #############
