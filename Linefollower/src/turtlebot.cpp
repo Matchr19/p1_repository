@@ -17,44 +17,53 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 *
 *
 *@copyright Copyright 2017 Sudarshan Raghunathan
-*@file motion_node.cpp
+*@file turtlebot.cpp
 *@author Sudarshan Raghunathan
-*@brief  Ros node to read direction to move in and publish velocity to turtlebot
+*@brief  Functions definitions for turtlebot class
 */
-#include <cv_bridge/cv_bridge.h>
-#include <cstdlib>
-#include <string>
-#include <opencv2/highgui/highgui.hpp>
-#include "opencv2/opencv.hpp"
+
+#include <geometry_msgs/Twist.h>
+#include <vector>
 #include "ros/ros.h"
 #include "ros/console.h"
 #include "turtlebot.hpp"
-#include "line_follower_turtlebot/pos.h"
+#include "Linefollower/pos.h"
 
-
-/**
-*@brief Main function that reads direction from the detect node and publishes velocity to the turtlebot at a given rate
-*@param argc is the number of arguments of the main function
-*@param argv is the array of arugments
-*@return 0
-*/
-int main(int argc, char **argv) {
-    // Initializing node and object
-    ros::init(argc, argv, "Velocity");
-    ros::NodeHandle n;
-    turtlebot bot;
-    geometry_msgs::Twist velocity;
-    // Creating subscriber and publisher
-    ros::Subscriber sub = n.subscribe("/direction",
-        1, &turtlebot::dir_sub, &bot);
-    ros::Publisher pub = n.advertise<geometry_msgs::Twist>
-        ("/cmd_vel_mux/input/teleop", 10);
-    ros::Rate rate(10);
-    while (ros::ok()) {
-        ros::spinOnce();
-        // Publish velocity commands to turtlebot
-        bot.vel_cmd(velocity, pub, rate);
+void turtlebot::dir_sub(Linefollower::pos msg) {
+    turtlebot::dir = msg.direction;
+}
+void turtlebot::vel_cmd(geometry_msgs::Twist &velocity,
+ ros::Publisher &pub, ros::Rate &rate) {
+    // If direction is left
+    if (turtlebot::dir == 0) {
+        velocity.linear.x = 0.1;
+        velocity.angular.z = 0.15;
+        pub.publish(velocity);
         rate.sleep();
+        ROS_INFO_STREAM("Turning Left");
     }
-    return 0;
+    // If direction is straight
+    if (turtlebot::dir == 1) {
+        velocity.linear.x = 0.15;
+        velocity.angular.z = 0;
+        pub.publish(velocity);
+        rate.sleep();
+        ROS_INFO_STREAM("Straight");
+    }
+    // If direction is right
+    if (turtlebot::dir == 2) {
+        velocity.linear.x = 0.1;
+        velocity.angular.z = -0.15;
+        pub.publish(velocity);
+        rate.sleep();
+        ROS_INFO_STREAM("Turning Right");
+    }
+    // If robot has to search
+    if (turtlebot::dir == 3) {
+        velocity.linear.x = 0;
+        velocity.angular.z = 0.25;
+        pub.publish(velocity);
+        rate.sleep();
+        ROS_INFO_STREAM("Searching");
+    }
 }

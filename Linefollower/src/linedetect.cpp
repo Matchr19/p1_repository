@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "ros/ros.h"
 #include "opencv2/opencv.hpp"
 #include "ros/console.h"
-#include "line_follower_turtlebot/pos.h"
+#include "Linefollower/pos.h"
 
 void LineDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   cv_bridge::CvImagePtr cv_ptr;

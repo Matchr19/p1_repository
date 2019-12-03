@@ -2,29 +2,50 @@
 #include <ros/ros.h>
 #include <kobuki_msgs/SensorState.h>
 #include <std_msgs/String.h>
+#include <kobuki_msgs/PowerSystemEvent.h>
 
 
 
- void batteryCallback(const kobuki_msgs::SensorState& msg)
+
+kobuki_msgs::SensorState msg;
+
+int chargestateCallback(const kobuki_msgs::SensorState & chg)
+{
+    int chargingState=0;
+    chargingState = chg.charger;
+
+    return chargingState;
+}
+
+ void batteryCallback(const kobuki_msgs::SensorState & msg)
   {
     
     double batt = msg.battery*1;
-    std::cout << "\nBatteri: " << batt << std::endl;
-    std::cout << "-----------------------------------------------" << std::endl;
+    //std::cout << "\nBatteri: " << batt << std::endl;
+    //std::cout << "-----------------------------------------------" << std::endl;
 
-    if (batt < 131)                  //hvis batterispænding er under  så:
+    if (chargestateCallback(msg) == 6)
     {
-        //h
-    }  
-
-    else if (batt >= 160)
-    {
-        //h
+        if(chargestateCallback(msg) == 2)
+        {
+            //back out of the docking base
+            //back;
+        }
     }
 
-    else if (132 <= batt)
+    else if (chargestateCallback(msg) == 0)
     {
-        //h
+        if(batt < 132)
+        {
+            //publish besked "1" (eller true) som læses af navigation.cpp
+            //oversættes til KØR TIL DOCKING STATION i navigation.cpp
+        }
+
+        else if(batt >= 132)
+        {
+            //publish besked "0" (eller false) som læses af navigation.cpp
+            //oversættes til ALT ER FINT i navigation.cpp
+        }
     }
 
   }
@@ -36,15 +57,19 @@
     ros::NodeHandle n;
  
     ros::Subscriber sub = n.subscribe("/mobile_base/sensors/core", 10, batteryCallback);
-  
-    //ros::Publisher lav_batteri_pub = n.advertise<std_msgs::String>("lav_batteri",1);
 
-    //ros::Rate loop_rate(1);
+    kobuki_msgs::PowerSystemEvent msg;
 
-    //int count = 0;
+    ros::Rate loop_rate(10);
 
-    ros::spin();
+    while(ros::ok()){
+    loop_rate.sleep();
+    ros::spinOnce(); 
+    }
+
 
     return 0;
   }
+
+  
 

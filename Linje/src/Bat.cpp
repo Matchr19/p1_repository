@@ -7,27 +7,27 @@
 void bump(const kobuki_msgs::SensorState &msg)
 {
 
-    if (msg.battery == 0)
+    if (msg.charger == 0)
     {
         std::cout << "Oplader ikke" << std::endl;
         
     }
-    else if (msg.battery == 6)
+    else if (msg.charger == 6)
     {
         std::cout << "Oplader fra base" << std::endl;
         
     }
-    else if (msg.battery == 2)
+    else if (msg.charger == 2)
     {
         std::cout << "Fuldt opladt" << std::endl;
         
     }
-    else if (msg.battery == 4)
+    else if (msg.charger == 4)
     {
         std::cout << "Lavt batteri" << std::endl;
         
     }
-    else if (msg.battery == 5)
+    else if (msg.charger == 5)
     {
         std::cout << "Kritisk lavt batteri" << std::endl;
         

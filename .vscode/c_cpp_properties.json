@@ -7,8 +7,10 @@
             },
             "includePath": [
                 "/opt/ros/kinetic/include/**",
-                "/home/ros/github/devel/include/**",
-                "/usr/include/**"
+                "/usr/include/**",
+                "/home/jacob/P1_projekt/devel/include/**",
+                "${workspaceFolder}/Linefollower/include",
+                "/home/jacob/P1_projekt/devel/.private/line_follower_turtlebot/include"
             ],
             "name": "ROS",
             "intelliSenseMode": "gcc-x64",

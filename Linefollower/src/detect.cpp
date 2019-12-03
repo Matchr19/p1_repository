@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "ros/ros.h"
 #include "ros/console.h"
 #include "linedetect.hpp"
-#include "line_follower_turtlebot/pos.h"
+#include "Linefollower/pos.h"
 
 /**
  *@brief Main function that reads image from the turtlebot and provides direction to move using image processing
@@ -48,8 +48,8 @@ int main(int argc, char **argv) {
         1, &LineDetect::imageCallback, &det);
 
     ros::Publisher dirPub = n.advertise<
-    line_follower_turtlebot::pos>("direction", 1);
-        line_follower_turtlebot::pos msg;
+    Linefollower::pos>("direction", 1);
+        Linefollower::pos msg;
 
     while (ros::ok()) {
         if (!det.img.empty()) {
