@@ -30,6 +30,13 @@ target_link_libraries(${PROJECT_NAME}_battery
   ${catkin_LIBRARIES}
 )
 
+# battery1 Executable
+add_executable(${PROJECT_NAME}_battery1 src/battery1.cpp)
+set_target_properties(${PROJECT_NAME}_battery1 PROPERTIES OUTPUT_NAME battery1 PREFIX "")
+target_link_libraries(${PROJECT_NAME}_battery1
+  ${catkin_LIBRARIES}
+)
+
 # lige Executable
 add_executable(${PROJECT_NAME}_lige src/lige.cpp)
 set_target_properties(${PROJECT_NAME}_lige PROPERTIES OUTPUT_NAME lige PREFIX "")
@@ -58,6 +65,7 @@ target_link_libraries(${PROJECT_NAME}_ny
 # Mark executables for installation
 install(TARGETS
   ${PROJECT_NAME}_battery
+  ${PROJECT_NAME}_battery1
   ${PROJECT_NAME}_lige
   ${PROJECT_NAME}_ny
 #  ${PROJECT_NAME}_NAME

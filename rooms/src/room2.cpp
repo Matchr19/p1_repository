@@ -15,12 +15,12 @@ std::cout << "Kører til rum 2" << std::endl;
 
 //turn right
 ros::Time start_turn = ros::Time::now();
-while(ros::Time::now() - start_turn < ros::Duration(20.0))
+while(ros::Time::now() - start_turn < ros::Duration(999))
 {
     geometry_msgs::Twist move;
     //velocity controls
-    move.linear.x = 0; //speed value m/s
-    move.angular.z = -3;
+    move.linear.x = 1.0; //speed value m/s
+    move.angular.z = 0;
     movement_pub.publish(move);
 
     ros::spinOnce();
