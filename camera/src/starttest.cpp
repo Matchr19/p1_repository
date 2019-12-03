@@ -39,7 +39,7 @@ public:
             cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
         }
         catch (cv_bridge::Exception &e)
-        {
+       giewåohy iåoh    geoåi0   {
             ROS_ERROR("cv_bridge exception: %s", e.what());
             return;
         }
