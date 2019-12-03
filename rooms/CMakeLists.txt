@@ -45,6 +45,16 @@ target_link_libraries(${PROJECT_NAME}_room3
 )
 
 
+# Navigation Executable
+add_executable(${PROJECT_NAME}_Navigation src/Navigation.cpp)
+set_target_properties(${PROJECT_NAME}_Navigation PROPERTIES OUTPUT_NAME Navigation PREFIX "")
+target_link_libraries(${PROJECT_NAME}_Navigation
+  ${catkin_LIBRARIES}
+)
+
+
+
+
 #add_executable(${PROJECT_NAME}_NAME src/NAME.cpp)
 #set_target_properties(${PROJECT_NAME}_NAME PROPERTIES OUTPUT_NAME NAME PREFIX "")
 #target_link_libraries(${PROJECT_NAME}_NAME
@@ -61,6 +71,7 @@ install(TARGETS
   ${PROJECT_NAME}_room1
   ${PROJECT_NAME}_room2
   ${PROJECT_NAME}_room3
+  ${PROJECT_NAME}_Navigation
 #  ${PROJECT_NAME}_NAME
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

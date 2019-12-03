@@ -5,6 +5,7 @@
 #include <kobuki_msgs/SensorState.h>
 #include <std_msgs/String.h>
 #include <battery_check/Msgtutorial.h>
+using namespace std;
 
   ros::Publisher batteribesked;
 
@@ -18,43 +19,38 @@
 
  void batteryCallback(const kobuki_msgs::SensorState& msg)
   {
-    float bat = msg.battery/10.0;          //batteriets spænding i V
-    float ska = 100.0/3.3;                 //skalar for %-udregningen
-    float ver = bat-13.0;                  //værdi for batteriets kapacitet hvis 13v er 0%
-    float res = ska*ver;                   //resultatet for udregningen
-    std::cout << "\nBatteri: " << res << "%" << std::endl;
+    
+    double batt = msg.battery*1;
+    std::cout << "\nBatteri: " << batt << std::endl;
     std::cout << "-----------------------------------------------" << std::endl;
 
-    if (res < 30)                          //hvis batteriprocenten er under 70% så:
+    if (batt < 131)                  //hvis batterispænding er under  så:
     {
-      ver == 0;
-
-
-      float bat = msg.battery/10.0;          
-      float ska = 100.0/3.3;                 
-      float der = bat-13.0;                  
-      float des = ska*der;                  
-      std::cout << "\nBatteri: " << des << "%" << std::endl;
-      std::cout << "-----------------------------------------------" << std::endl;
-
-      if (des == 100)
-
-      {
-        //kør ud af ladestationen
-      }
-
-      battery_check::Msgtutorial msg;
-      msg.data == 2;
-
-
-
-    
-      ros::shutdown(msg.battery)
-
+       if(k==1)
+       {
+         battery_check::Msgtutorial msg;
+         msg.data=2;
+         batteribesked.publish(msg);
+       }
+       else
+       {
+         cout <<"kan ikke det her?" << endl;
+       }
        
-      
-      sendbatteribesked;
-      
+    }  
+
+    else if (batt >= 160)
+    {
+        //h
+    }
+
+    else if (132 <= batt)
+    {
+        //h
+    }
+
+  }
+
 
       //system("rosnode kill Transport");
       //system("rosrun lav_batteri);

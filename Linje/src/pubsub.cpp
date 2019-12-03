@@ -48,6 +48,8 @@ void drive()
 
 void bump(const kobuki_msgs::BumperEvent &bumpMsg)
 {
+
+    
     if (bumpMsg.state == 1)
     {
         int bumpo = bumpMsg.bumper;
