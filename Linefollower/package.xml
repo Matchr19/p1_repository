@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>line_follower_turtlebot</name>
+  <name>Linefollower</name>
   <version>0.0.0</version>
-  <description>The Line-Follower-TurtleBot package</description>
+  <description>The Linefollower package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
