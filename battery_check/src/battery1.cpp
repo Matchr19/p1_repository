@@ -3,11 +3,15 @@
 #include <kobuki_msgs/SensorState.h>
 #include <std_msgs/String.h>
 #include <kobuki_msgs/PowerSystemEvent.h>
+#include <battery_check/Msgtutorial.h>
 
 
 
 
 kobuki_msgs::SensorState msg;
+ros::Publisher msg_pub;
+battery_check::Msgtutorial bat_msg;
+
 
 int chargestateCallback(const kobuki_msgs::SensorState & chg)
 {
@@ -26,30 +30,27 @@ int chargestateCallback(const kobuki_msgs::SensorState & chg)
 
     if (chargestateCallback(msg) == 6)
     {
-        if(chargestateCallback(msg) == 2)
+
+        //start kør mod ladestation
+        
+        while(chargestateCallback(msg) != 2)
         {
-            //back out of the docking base
-            //back;
+            //lad op indtil 100%
+            bat_msg.data = 2;
+            msg_pub.publish(bat_msg);
+
+
         }
+        bat_msg.data = 1;
+        msg_pub.publish(bat_msg);
+        //kør ud af ladestation
+
     }
+    bat_msg.data = 5;
+    msg_pub.publish(bat_msg);
 
-    else if (chargestateCallback(msg) == 0)
-    {
-        if(batt < 132)
-        {
-            //publish besked "1" (eller true) som læses af navigation.cpp
-            //oversættes til KØR TIL DOCKING STATION i navigation.cpp
-        }
-
-        else if(batt >= 132)
-        {
-            //publish besked "0" (eller false) som læses af navigation.cpp
-            //oversættes til ALT ER FINT i navigation.cpp
-        }
-    }
-
+  
   }
- 
  int main(int argc, char **argv)
   {
     ros::init(argc, argv, "battery");
@@ -57,6 +58,8 @@ int chargestateCallback(const kobuki_msgs::SensorState & chg)
     ros::NodeHandle n;
  
     ros::Subscriber sub = n.subscribe("/mobile_base/sensors/core", 10, batteryCallback);
+
+    msg_pub = n.advertise<battery_check::Msgtutorial>("/batteri/info", 100);
 
     kobuki_msgs::PowerSystemEvent msg;
 

@@ -9,8 +9,10 @@
                 "/opt/ros/kinetic/include/**",
                 "/usr/include/**",
                 "/home/jacob/P1_projekt/devel/include/**",
+                "/home/ros/github/devel/include/**",
                 "${workspaceFolder}/Linefollower/include",
-                "/home/jacob/P1_projekt/devel/.private/line_follower_turtlebot/include"
+                "/home/jacob/P1_projekt/devel/.private/line_follower_turtlebot/include",
+                "/home/ros/github/devel/.private/battery_check/include"
             ],
             "name": "ROS",
             "intelliSenseMode": "gcc-x64",
