@@ -7,13 +7,32 @@ add_compile_options(-std=c++11)
 ## Find catkin macros and libraries
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  message_runtime
   turtlesim
+  message_generation
+  std_msgs
 )
+
+##Generate messeges in the msg folder
+add_message_files(
+  FILES
+  Msgtutorial.msg
+ )
+
+ ##Generate added messages and servises are listet here
+  generate_messages(
+    DEPENDENCIES
+    std_msgs
+  )
 
 ###################################
 ## catkin specific configuration ##
 ###################################
 catkin_package(
+  CATKIN_DEPENDS
+  std_msgs
+  roscpp
+  message_runtime
 )
 
 ###########
@@ -24,11 +43,12 @@ include_directories(
 )
 
 # battery Executable
-add_executable(${PROJECT_NAME}_battery src/battery.cpp)
-set_target_properties(${PROJECT_NAME}_battery PROPERTIES OUTPUT_NAME battery PREFIX "")
-target_link_libraries(${PROJECT_NAME}_battery
-  ${catkin_LIBRARIES}
-)
+
+#add_executable(${PROJECT_NAME}_battery src/battery.cpp)
+#set_target_properties(${PROJECT_NAME}_battery PROPERTIES OUTPUT_NAME battery PREFIX "")
+#target_link_libraries(${PROJECT_NAME}_battery
+#  ${catkin_LIBRARIES}
+#)
 
 # lige Executable
 add_executable(${PROJECT_NAME}_lige src/lige.cpp)
@@ -57,9 +77,10 @@ target_link_libraries(${PROJECT_NAME}_ny
 
 # Mark executables for installation
 install(TARGETS
-  ${PROJECT_NAME}_battery
+#  ${PROJECT_NAME}_battery
   ${PROJECT_NAME}_lige
   ${PROJECT_NAME}_ny
 #  ${PROJECT_NAME}_NAME
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
+
