@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "ros/ros.h"
 #include "ros/console.h"
 #include "linedetect.hpp"
-#include "line_follower_turtlebot/pos.h"
+#include "line_follower_turtlebot/Linefollower/msg/pos.h"
 
 /**
  *@brief Main function that reads image from the turtlebot and provides direction to move using image processing
