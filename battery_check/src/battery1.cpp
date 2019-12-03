@@ -14,17 +14,17 @@
 
     if (batt < 131)                  //hvis batterispænding er under  så:
     {
-        //h
+        std::cout << "LAVT BATTERI" << std::endl;
     }  
 
     else if (batt >= 160)
     {
-        //h
+        std::cout << "HØJT BATTERI" << std::endl;
     }
 
     else if (132 <= batt)
     {
-        //h
+        std::cout << "LIGEGYLDIGT/MEDIUM BATTERI" << std::endl;
     }
 
   }
