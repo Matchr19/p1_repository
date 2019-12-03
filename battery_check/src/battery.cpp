@@ -1,5 +1,3 @@
-//når der bruges rosnode kill kan man ikke bruge respawn i en roslaunch
-
 #include <iostream>
 #include <ros/ros.h>
 #include <kobuki_msgs/SensorState.h>
