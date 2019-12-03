@@ -11,6 +11,26 @@ void lav_batteriCallback(const std_msgs::String::ConstPtr& msg)
 
 }
 
+
+
+void sendbatteribesked(const std_msgs::String::ConstPtr& msg)
+
+{
+    if (msg.data == 2){
+
+        //kør array tilbage til ladestation
+
+
+    }
+
+    else {
+        //kør array normalt
+    }
+
+    
+
+}
+
 int main(int argc, char **argv)
 {
 

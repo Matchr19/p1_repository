@@ -7,7 +7,7 @@
             },
             "includePath": [
                 "/opt/ros/kinetic/include/**",
-                "/home/ros/github/src/hello_pkg/include/**",
+                "/home/ros/github/devel/include/**",
                 "/usr/include/**"
             ],
             "name": "ROS",

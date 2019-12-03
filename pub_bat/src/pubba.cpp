@@ -3,7 +3,7 @@
 #include <std_msgs/String.h>
 #include <sstream>
 
-int tal = 5;
+
 
 int main(int argc, char **argv)
 {
@@ -18,9 +18,6 @@ ros::Rate loop_rate(1);
 
 int count = 0;
 
-
-if(tal > 3)
-{
 
 while (ros::ok())
  {
@@ -40,8 +37,9 @@ while (ros::ok())
 
     ++count;
  }
-}
+
 return 0;
+}
 
+ 
 
- }

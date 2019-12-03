@@ -24,7 +24,6 @@ void bump(const kobuki_msgs::BumperEvent &msg)
             bumpertekst = " Right bumper";
         }
 
-        system("rosnode kill pubsub");
 
 
         std::cout << "JEG ER KØRT IND I NOGET med:" << bumpertekst << std::endl;
@@ -42,7 +41,6 @@ int main(int argc, char *argv[])
     ros::NodeHandle n;
     ros::Subscriber bumper_sub = n.subscribe("/mobile_base/events/bumper", 10, bump);
 
-    ROS_INFO("JEG ER HER");
     ros::spin();
 
     return 0;
