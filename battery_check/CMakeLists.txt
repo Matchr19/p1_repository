@@ -79,6 +79,20 @@ target_link_libraries(${PROJECT_NAME}_ny
   ${catkin_LIBRARIES}
 )
 
+# PubBatteri Executable
+add_executable(${PROJECT_NAME}_PubBatteri src/PubBatteri.cpp)
+set_target_properties(${PROJECT_NAME}_PubBatteri PROPERTIES OUTPUT_NAME PubBatteri PREFIX "")
+target_link_libraries(${PROJECT_NAME}_PubBatteri
+  ${catkin_LIBRARIES}
+)
+
+# SubBatteri Executable
+add_executable(${PROJECT_NAME}_SubBatteri src/SubBatteri.cpp)
+set_target_properties(${PROJECT_NAME}_SubBatteri PROPERTIES OUTPUT_NAME SubBatteri PREFIX "")
+target_link_libraries(${PROJECT_NAME}_SubBatteri
+  ${catkin_LIBRARIES}
+)
+
 #add_executable(${PROJECT_NAME}_NAME src/NAME.cpp)
 #set_target_properties(${PROJECT_NAME}_NAME PROPERTIES OUTPUT_NAME NAME PREFIX "")
 #target_link_libraries(${PROJECT_NAME}_NAME
@@ -96,6 +110,8 @@ install(TARGETS
   #${PROJECT_NAME}_battery
   ${PROJECT_NAME}_lige
   ${PROJECT_NAME}_ny
+  ${PROJECT_NAME}_PubBatteri
+  ${PROJECT_NAME}_SubBatteri
 #  ${PROJECT_NAME}_NAME
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
