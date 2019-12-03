@@ -7,6 +7,7 @@
 geometry_msgs::Twist msg;
 kobuki_msgs::BumperEvent bumpMsg;
 ros::Publisher cmd_vel_pub;
+
 void sendPub(double ligeud, double drej)
 {
     msg.linear.x = ligeud;
@@ -73,7 +74,7 @@ int main(int argc, char *argv[])
     ros::NodeHandle n;
     ros::Rate loop_rate(0.4);
     cmd_vel_pub = n.advertise<geometry_msgs::Twist>("/cmd_vel_mux/input/teleop", 1);
-    ros::Subscriber bumperSub = n.subscribe("/mobile_base/events/bumper", 2, bump);
+    ros::Subscriber bumperSub = n.subscribe("/mobile_base/events/bumper", 1, bump);
     while(ros::ok())
     {
     std::cout << "Jeg er kommet ind i loopet" << std::endl;
