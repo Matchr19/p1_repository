@@ -12,10 +12,21 @@
     std::cout << "\nBatteri: " << batt << std::endl;
     std::cout << "-----------------------------------------------" << std::endl;
 
-    //if (res < 30)                          //hvis batteriprocenten er under 70% så:
-    //{
-      
-    //}  
+    if (batt < 131)                  //hvis batterispænding er under  så:
+    {
+        //h
+    }  
+
+    else if (batt >= 160)
+    {
+        //h
+    }
+
+    else if (132 <= batt)
+    {
+        //h
+    }
+
   }
  
  int main(int argc, char **argv)
