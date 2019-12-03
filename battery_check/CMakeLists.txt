@@ -50,6 +50,13 @@ include_directories(
 #  ${catkin_LIBRARIES}
 #)
 
+# battery1 Executable
+add_executable(${PROJECT_NAME}_battery1 src/battery1.cpp)
+set_target_properties(${PROJECT_NAME}_battery1 PROPERTIES OUTPUT_NAME battery1 PREFIX "")
+target_link_libraries(${PROJECT_NAME}_battery1
+  ${catkin_LIBRARIES}
+)
+
 # lige Executable
 add_executable(${PROJECT_NAME}_lige src/lige.cpp)
 set_target_properties(${PROJECT_NAME}_lige PROPERTIES OUTPUT_NAME lige PREFIX "")
@@ -77,7 +84,12 @@ target_link_libraries(${PROJECT_NAME}_ny
 
 # Mark executables for installation
 install(TARGETS
+<<<<<<< HEAD
+  ${PROJECT_NAME}_battery
+  ${PROJECT_NAME}_battery1
+=======
 #  ${PROJECT_NAME}_battery
+>>>>>>> 55f13360b2de2a8fdf9e854dd9d7af4eb07f77c8
   ${PROJECT_NAME}_lige
   ${PROJECT_NAME}_ny
 #  ${PROJECT_NAME}_NAME
