@@ -26,7 +26,7 @@ void batteryCallback(const kobuki_msgs::SensorState & msg)
     
     if(chargestateCallback(msg) == 2)                   //2 betyder fuldopladt
     {
-        hiLo = 0;                           //0 betyder venv
+        hiLo = 0;                           //0 betyder vent
         //KØR 5 CM BAGUD (Christian laver en kort kode til dette)
     }
 
@@ -44,7 +44,7 @@ void batteryCallback(const kobuki_msgs::SensorState & msg)
         {
 
             hiLo = 2;                       //2 betyder alt er okay
-
+            
         }
         
     }
@@ -52,6 +52,10 @@ void batteryCallback(const kobuki_msgs::SensorState & msg)
     else                                    //hvis den ikke er 0 eller 2/hvis den ikke er fuldopladt eller ikke er uden for laderen
     {
         hiLo = 0;
+        //for at den ikke bliver ved med at have docking kørende når den forlader
+        //kør følgende én gang:
+        //system (rosnode kill kobuki_auto_docking activate.launch)
+        //system (rosnode kill kobuki_auto_docking minimal.launch)
     }
 
 }
