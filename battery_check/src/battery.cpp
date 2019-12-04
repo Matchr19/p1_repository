@@ -7,6 +7,8 @@ using namespace std;
 
   ros::Publisher batteribesked;
 
+  int x;
+
   void sendbatteribesked()
   {
     battery_check::Msgtutorial msg;
@@ -24,7 +26,7 @@ using namespace std;
 
     if (batt < 131)                  //hvis batterispænding er under  så:
     {
-       if(k==1)
+       if(x==1)
        {
          battery_check::Msgtutorial msg;
          msg.data=2;
@@ -65,8 +67,8 @@ using namespace std;
       // sendbatteribesked, publisher i stedet for subscriber function?
 
     
-    }  
-  }
+     
+  
  
  int main(int argc, char **argv)
   {
