@@ -7,56 +7,58 @@
 #include <math.h> 
 #include <sstream>
 
-int hiLo = 1;
-int chargingState = 0;
+int hiLo = 0;                               //hiLo er tallet vi publisher til sidst
 
 kobuki_msgs::SensorState msg;
 
 int chargestateCallback(const kobuki_msgs::SensorState & chg)
 {                  
     
-    chargingState = chg.charger * 1;
+    int chargingState=0;
+    chargingState = chg.charger;
 
     return chargingState;
 }
 
 void batteryCallback(const kobuki_msgs::SensorState & msg)
 {
+    float batt = msg.battery;                           //batt er batteriets spænding i dV
     
-    double batt = msg.battery*1;
-
-    //if (chargestateCallback(msg) == 6)
-    //{
-    if(chargingState = 2)
+    if(chargestateCallback(msg) == 2)                   //2 betyder fuldopladt
     {
-        //KØR 5 CM BAGUD
+        hiLo = 0;                           //0 betyder vent
+        //KØR 5 CM BAGUD (Christian laver en kort kode til dette)
     }
 
-    //}
-
-    else if (chargingState = 0)
+    else if (chargestateCallback(msg) == 0)             //0 betyder den ikke lader
     {
-        if(batt < 135)
+        
+        if(batt < 135)                      //når spændingen er under 135 dV
         {
-            //publish besked "1" som læses af navigation.cpp
-            //oversættes til KØR TIL DOCKING STATION i navigation.cpp
             
-            hiLo = +1;
+            hiLo = 1;                       //1 betyder kør til dock
 
-            //std::cout << "Lav spænding" << std::endl;
         }
 
-        else if(batt >= 135)
+        else if(batt >= 135)                //når spændingen er over eller lige med 135 dV
         {
-            //publish besked "2" som læses af navigation.cpp
-            //oversættes til ALT ER FINT i navigation.cpp
 
-            hiLo = +2;
-
-            //std::cout << "Høj spænding" << std::endl;
+            hiLo = 2;                       //2 betyder alt er okay
+            
         }
+        
     }
 
+    else                                    //hvis den ikke er 0 eller 2/hvis den ikke er fuldopladt eller ikke er uden for laderen
+    {
+        hiLo = 0;
+        //for at den ikke bliver ved med at have docking kørende når den forlader
+        //kør følgende én gang:
+        //system (rosnode kill kobuki_auto_docking activate.launch)
+        //system (rosnode kill kobuki_auto_docking minimal.launch)
+    }
+
+<<<<<<< HEAD
 <<<<<<< HEAD
     else if (chargestate)
 
@@ -64,10 +66,12 @@ void batteryCallback(const kobuki_msgs::SensorState & msg)
 =======
     //return hiLo;
 >>>>>>> dcd827f90999c325ca4f8fef618074246dad0eae
+=======
+>>>>>>> 22f8e27b4dc700ee99bbd2297a5660e5baf91de8
 }
  
- int main(int argc, char **argv)
-    {
+int main(int argc, char **argv)
+{
     ros::init(argc, argv, "battery");
  
     ros::NodeHandle n;
@@ -81,13 +85,12 @@ void batteryCallback(const kobuki_msgs::SensorState & msg)
     ros::Rate loop_rate(1);
 
 
-
     while (ros::ok())
     {
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << "hiLo: " << hiLo;
+    ss << hiLo;                                   //vi publisher hvad hiLo er (0, 1 eller 2)
     msg.data = ss.str();
    
     std::cout << msg.data.c_str() << std::endl;
@@ -106,8 +109,7 @@ void batteryCallback(const kobuki_msgs::SensorState & msg)
     }
 */
 
-    //std::cout << "hiLo = " << hiLo << std::endl;
     return 0;
-  }
+}
 
   

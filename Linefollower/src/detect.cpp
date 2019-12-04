@@ -40,21 +40,29 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 int main(int argc, char **argv) {
     // Initializing node and object
-    ros::init(argc, argv, "detection");
-    ros::NodeHandle n;
-    LineDetect det;
+    ros::init(argc, argv, "detection"); //Initialser en ros node med navn "detection"
+    ros::NodeHandle n; //start nodehandle n
+    LineDetect det; //laver et komponent i call LineDetect med navn "det"
     // Creating Publisher and subscriber
     ros::Subscriber sub = n.subscribe("/camera/rgb/image_raw",
-        1, &LineDetect::imageCallback, &det);
-
-    ros::Publisher dirPub = n.advertise<
-    Linefollower::pos>("direction", 1);
-        Linefollower::pos msg;
+        1, &LineDetect::imageCallback, &det); //Starter en publisher på image_raw, med en kø på 1, og med callback funktion 
+        //imageCallback, som ligger i linedetect.cpp, med besked det. 
+    ros::Publisher dirPub = n.advertise<Linefollower::pos>("direction", 1); //Starter en publisher på custom besked pos til topic "direction"
+        Linefollower::pos msg; //Laver en mesked til type pos, som hedder msg.
 
     while (ros::ok()) {
-        if (!det.img.empty()) {
+        if (!det.img.empty()) {//hvis der er et billede i variabel det.img, kør følgende
             // Perform image processing
+            /*
+            Kør følgende funktion og lig det i variablen det.img_filt. 
+            Prototypen til gauss() er i linedetect.hpp. Funktionen køres i linedetect.cpp
+            Her ligges et gaussisk filter på billedet, som laver kontrasten om
+            */
             det.img_filt = det.Gauss(det.img);
+            /*
+            Vi tager nu det filtrede billede, og kører den gennem colorthresh(). Igen er prototypen i linedetect.hpp,
+            og funktionen i linedetect.cpp. 
+            */
             msg.direction = det.colorthresh(det.img_filt);
             // Publish direction message
             dirPub.publish(msg);
