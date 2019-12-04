@@ -2,6 +2,8 @@
 #include <std_msgs/String.h>
 #include <iostream>
 
+int x;
+
 void lav_batteriCallback(const std_msgs::String::ConstPtr& msg)
 
 {
@@ -16,7 +18,7 @@ void lav_batteriCallback(const std_msgs::String::ConstPtr& msg)
 void sendbatteribesked(const std_msgs::String::ConstPtr& msg)
 
 {
-    if (msg.data == 2){
+    if (x == 1){
 
         //kør array tilbage til ladestation
 

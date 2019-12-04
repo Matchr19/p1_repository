@@ -1,5 +1,3 @@
-//når der bruges rosnode kill kan man ikke bruge respawn i en roslaunch
-
 #include <iostream>
 #include <ros/ros.h>
 #include <kobuki_msgs/SensorState.h>
@@ -8,6 +6,8 @@
 using namespace std;
 
   ros::Publisher batteribesked;
+
+  int x;
 
   void sendbatteribesked()
   {
@@ -26,7 +26,7 @@ using namespace std;
 
     if (batt < 131)                  //hvis batterispænding er under  så:
     {
-       if(k==1)
+       if(x==1)
        {
          battery_check::Msgtutorial msg;
          msg.data=2;
@@ -67,8 +67,8 @@ using namespace std;
       // sendbatteribesked, publisher i stedet for subscriber function?
 
     
-    }  
-  }
+     
+  
  
  int main(int argc, char **argv)
   {

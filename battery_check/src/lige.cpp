@@ -3,39 +3,31 @@
 #include <kobuki_msgs/BumperEvent.h>
 #include <iostream>
 #include <string>
+#include <ros/ros.h>
+#include <std_msgs/String.h>
 
 
-geometry_msgs::Twist drive(geometry_msgs::Twist &msg)
+void lav_batteriCallback(const std_msgs::String::ConstPtr& msg)
+
 {
-        msg.angular.z = 2;
-    
-    
-    std::cout << "Jeg drejer rundt med: " << msg.angular.z << " km/t" << std::endl;
-    return msg;
+    std::cout << "I heard:" << msg->data.c_str() << std::endl;
 }
 
 
 
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
-    ros::init(argc, argv, "lige");
-    srand(time(NULL));
-    ros::NodeHandle n;
-    ros::Rate loop_rate(1000);
-    
-    
-    ros::Publisher cmd_vel_pub = n.advertise<geometry_msgs::Twist>("/cmd_vel_mux/input/teleop", 1, drive);
-    geometry_msgs::Twist msg;
-    while(ros::ok())
-    {
-    
-    cmd_vel_pub.publish(drive(msg));
-    loop_rate.sleep();
-    
 
-    }
- 
-    
-    
+    ros::init(argc,argv,"lige");
+
+    ros::NodeHandle n;
+
+    ros::Subscriber sub = n.subscribe("lav_batteri", 1, lav_batteriCallback);
+
+    ros::spin();
+
+    std::cout << "-----------------------" << std::endl;
+
     return 0;
+
 }
