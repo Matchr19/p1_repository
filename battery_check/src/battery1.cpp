@@ -63,6 +63,8 @@ int batteryCallback(const kobuki_msgs::SensorState & msg)
         }
     }
 
+    else if (chargestate)
+
     return hiLo;
 }
  

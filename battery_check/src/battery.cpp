@@ -7,6 +7,8 @@ using namespace std;
 
   ros::Publisher batteribesked;
 
+  kobuki_msgs::SensorState msg;
+
   int x;
 
   void sendbatteribesked()
@@ -26,18 +28,15 @@ using namespace std;
 
     if (batt < 131)                  //hvis batterispænding er under  så:
     {
-       if(x==1)
-       {
+       
+       
          battery_check::Msgtutorial msg;
-         msg.data=2;
+         msg.data=2; //skal bruge strøm
          batteribesked.publish(msg);
        }
        else
        {
-         cout <<"kan ikke det her?" << endl;
-       }
-       
-    }  
+          
 
     else if (batt >= 160)
     {

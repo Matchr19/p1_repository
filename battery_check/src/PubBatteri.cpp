@@ -8,7 +8,7 @@
 int main(int argc, char **argv)
 {
 
-ros::init(argc, argv, "pubba");
+ros::init(argc, argv, "PubBatteri");
 
 ros::NodeHandle n;
 
