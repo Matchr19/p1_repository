@@ -58,16 +58,6 @@ void batteryCallback(const kobuki_msgs::SensorState & msg)
         //system (rosnode kill kobuki_auto_docking minimal.launch)
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    else if (chargestate)
-
-    return hiLo;
-=======
-    //return hiLo;
->>>>>>> dcd827f90999c325ca4f8fef618074246dad0eae
-=======
->>>>>>> 22f8e27b4dc700ee99bbd2297a5660e5baf91de8
 }
  
 int main(int argc, char **argv)
