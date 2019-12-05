@@ -30,24 +30,58 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "opencv2/opencv.hpp"
 #include "ros/console.h"
 #include "Linefollower/pos.h"
-
+/*
+Linedetect::imageCallback er en funktion som kræver en variabel sensor_msgs::ImageConstPtr& msg (Et billede)
+Vi kører denne funktion, hver gang der kommer et billede
+*/
 void LineDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
-  cv_bridge::CvImagePtr cv_ptr;
+  /*
+Vi bruger cv_bridge for at konvertere ROS billeder til billeder som openCV kan forstå
+Vi laver en variabel cv_bridge::CvImagePtr som lagrer vores ros billede i variablen cv_ptr
+  */
+  cv_bridge::CvImagePtr cv_ptr; 
   try {
+    /*
+    Vi bruger nu cv_bridge::toCvCopy til at konvertere vores billede som ligger i variabel msg, til BGR8 farverummet
+    Dette kan openCV arbejde med
+    */
     cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
-    img = cv_ptr->image;
-    cv::waitKey(30);
+    
+    img = cv_ptr->image;//Nu ligger vi vores nye billede over i variabel img
+    cv::waitKey(30); //Vi venter i 30 milisekunder
   }
   catch (cv_bridge::Exception& e) {
-    ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
+    ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str()); //Hvis ikke vi kan konvertere, melder vi fejl
   }
 }
-
+/*
+Vi har her en funktion med cv::Mat som return value. cv::Mat er en variabel som kan indeholde store vektorer, såsom billeder
+Funktionen kræver en variabel af type cv::mat, altså er billede som input
+*/
 cv::Mat LineDetect::Gauss(cv::Mat input) {
-  cv::Mat output;
-// Applying Gaussian Filter
+  cv::Mat output; //Vi laver en værdi som hedder output, med type cv::Mat
+  /*
+  Funktionen cv::GaussianBlur() tager et billede, og indsætter et gaussisk filter, der er følgende variabler til funktionen:
+  void cv::GaussianBlur	(	InputArray src, OutputArray dst, Size ksize, double sigmaX, double sigmaY = 0, int borderType = BORDER_DEFAULT)	
+src:	input image; the image can have any number of channels, which are processed independently, but the depth should be CV_8U, CV_16U, CV_16S, CV_32F or CV_64F.
+dst:	output image of the same size and type as src.
+ksize:	Gaussian kernel size. ksize.width and ksize.height can differ but they both must be positive and odd. 
+Or, they can be zero's and then they are computed from sigma.
+sigmaX:	Gaussian kernel standard deviation in X direction.
+sigmaY:	Gaussian kernel standard deviation in Y direction; 
+if sigmaY is zero, it is set to be equal to sigmaX, if both sigmas are zeros, 
+they are computed from ksize.width and ksize.height, respectively (see getGaussianKernel for details); 
+to fully control the result regardless of possible future modifications of all this semantics, it is recommended 
+to specify all of ksize, sigmaX, and sigmaY.
+
+Mere her: https://docs.opencv.org/2.4/modules/imgproc/doc/filtering.html?highlight=gaussianblur#gaussianblur
+
+Vi indsætter det billede som bliver tilsendt funktionen, og sender det filtrerede billede ud i værdien output.
+
+  */
   cv::GaussianBlur(input, output, cv::Size(3, 3), 0.1, 0.1);
-  return output;
+
+  return output;//Vi retunerer nu billedet med det gaussiske filter på.
 }
 
 int LineDetect::colorthresh(cv::Mat input) {//typen cv::Mat, er en måde for OpenCV at lagre store vektorer såsom billeder
@@ -90,8 +124,8 @@ cv::Scalar variabel-typer. cv::Scalar er variabler som kan holde op til 4 værdi
 Vi bruger disse til at definere, hvilket rum indenfor HSV farverummet, vi vil beholde. 
 Dette gør vi for at isolere vores gule linje.
 */
-  LineDetect::LowerYellow = {20, 100, 100};
-  LineDetect::UpperYellow = {30, 255, 255};
+  LineDetect::LowerYellow = {20, 120, 80};
+  LineDetect::UpperYellow = {30, 255, 220};
 
   /*
   cv::inRange tjekker om værdier i en vektor eller et array ligge indenfor to andre værdier.
@@ -101,10 +135,11 @@ Dette gør vi for at isolere vores gule linje.
   en cv::Mat type, og som er defineret i Linedetect.hpp.
   */
   cv::inRange(LineDetect::img_hsv, LowerYellow, UpperYellow, LineDetect::img_mask);
-  
-  //img_mask(cv::Rect(0, 0, w, 0.8*h)) = 0;
-  // Find contours for better visualization
-
+  /*
+  Vi vil ikke bruge hele billedet, da der kan være streget på vægge osv. Vi laver derfor en rektangel, 
+  som vi definerer, ikke skal være en del af billedet
+  */
+  img_mask(cv::Rect(0, 0, w, 0.8*h)) = 0;
   /*
  
  void cv::findContours(InputOutputArray image, OutputArrayOfArrays contours, OutputArray hierarchy,
@@ -119,8 +154,7 @@ Læs mere om disse værdier her: https://docs.opencv.org/3.4/d3/dc0/group__imgpr
 
   */
   cv::findContours(LineDetect::img_mask, v, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
-  // If contours exist add a bounding
-  // Choosing contours with maximum area
+
 /*
 Vi siger nu, at hvis der er contours, altså at der er elementer i vores vektor v, så kører vi det næste
 */
@@ -144,53 +178,95 @@ Derefter plusses count med 1.
   }
 /*
 Vi bruger nu funktionen boundingRect() til at udregne et rektangel ud fra punkterne i vores vektor v. 
-Vi bruger kune punkterne 
+Vi bruger kun punkterne op til tallet som idx er. 
 
 */
 
   cv::Rect rect = boundingRect(v[idx]);
+
+  /*
+  Vi definerer du 3 punkter, pt1, pt2 & pt3
+  */
+
   cv::Point pt1, pt2, pt3;
+
+  /*
+  Vi tager nu og og angiver pt1 til rektanglets start, x og y værdier. Dette er værdierne i øverste venstre hjørne
+  Vi angiver pt2 koordinater til rektanglets start x og y værdier, dog plusset med bredden og højden af rektanglet. 
+  pt3 bliver til koordinaterne som pt1 har, med henholdsvis plusset og minusset med 5.
+  Dette forskyder punktet, og her vil vi have teksten til at stå
+  */
   pt1.x = rect.x;
   pt1.y = rect.y;
   pt2.x = rect.x + rect.width;
   pt2.y = rect.y + rect.height;
   pt3.x = pt1.x+5;
   pt3.y = pt1.y-5;
-  // Drawing the rectangle using points obtained
+  /*
+  Vi bruger nu punkterne  til at tegne rektanglet, med funktionen rectangle(). Vi giver vores kamerabillede som input.
+  Vi kommer vores to rektangel punkter ind, og angiver at stregen skal være i rgb farverummet 255, 0, 0 som er rød.
+  Til sidst angives at vi vil tegne med en tykkelse på 2
+  */
   rectangle(input, pt1, pt2, CV_RGB(255, 0, 0), 2);
-  // Inserting text box
-  cv::putText(input, "Line Detected", pt3,
-    CV_FONT_HERSHEY_COMPLEX, 1, CV_RGB(255, 0, 0));
+  /*
+Vi bruger nu cv::putText() til at skrive på billedet. Vi skriver på input, som er billedet direkte fra kameraet.
+Vi angiver at der skal stå "Linje fundet", og det skal sættes i punktet pt3. Vi vælger skrifttypen CV_FONT_HERSHEY_COMPLEX.
+1 tallet er skalering af skriften. Til sidst vælger vi farven på teksten
+  */
+  cv::putText(input, "Linje fundet", pt3, CV_FONT_HERSHEY_COMPLEX, 1, CV_RGB(255, 0, 0));
   }
-  // Mask image to limit the future turns affecting the output
+
+
+
+
+/*
+Vi er interesserede i at robotten kun scanner det som er lige foran dem, så at hvis der er noget 
+i højre eller venstre side af billedet som kan distrahere kameraet, så kan den køre forkert. Vi definerer derfor at i højre 
+og venstre side er der et rektangel hvori robotten ikke leder efter gule pixels
+*/
+
+  
   img_mask(cv::Rect(0.7*w, 0, 0.3*w, h)) = 0;
   img_mask(cv::Rect(0, 0, 0.3*w, h)) = 0;
+
+
+/*
+med cv::Moments kan vi beregne hvor linjen er i forhold til center. af billedet
+Ud fra dette kan vi bestemme om robotten skal køre til ventre, for at linjen igen er i midten, eller om den skal til højre
+Vi laver en variabel cv::Moments M. vi kører funktionen cv::moments, og indsætter vores billede. Vi får så forskellige
+værdier ud. 
+*/
+
   // Perform centroid detection of line
   cv::Moments M = cv::moments(LineDetect::img_mask);
   if (M.m00 > 0) {
     cv::Point p1(M.m10/M.m00, M.m01/M.m00);
     cv::circle(LineDetect::img_mask, p1, 5, cv::Scalar(155, 200, 0), -1);
   }
+
   c_x = M.m10/M.m00;
   // Tolerance to chooise directions
   auto tol = 15;
-  auto count = cv::countNonZero(img_mask);
+  auto count = cv::countNonZero(img_mask); //Denne funktion tæller hvor mange værdier i img_mask, som ikke er 0
   // Turn left if centroid is to the left of the image center minus tolerance
   // Turn right if centroid is to the right of the image center plus tolerance
   // Go straight if centroid is near image center
   if (c_x < w/2-tol) {
-    LineDetect::dir = 0;
+    LineDetect::dir = 0; //Kør til venstre
   } else if (c_x > w/2+tol) {
-    LineDetect::dir = 2;
+    LineDetect::dir = 2; //Kør til højre
   } else {
-    LineDetect::dir = 1;
+    LineDetect::dir = 1; //Kør ligeud
   }
-  // Search if no line detected
-  if (count == 0) {
+
+  // Hvis der ikke er nogle værdier over 0, så er der ikke nogen linje, og vi skal derfor lede efter en
+  if (count < 50) {
     LineDetect::dir = 3;
   }
   // Output images viewed by the turtlebot
-  cv::namedWindow("Turtlebot View");
-  imshow("Turtlebot View", input);
-  return LineDetect::dir;
+  cv::namedWindow("Turtlebot View"); //cv::namedWindow laver et vindue med navn "Turtlebot View"
+  imshow("Turtlebot img_mask", img_mask);
+  imshow("Turtlebot img_hsv", img_hsv);
+  imshow("Turtlebot input", input); //imshow tager vinduet "Turtlebot View og viser billedet input"
+  return LineDetect::dir; //Returner dir.
 }

@@ -40,21 +40,26 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 int main(int argc, char **argv) {
     // Initializing node and object
-    ros::init(argc, argv, "Velocity");
+    ros::init(argc, argv, "Velocity"); // Starter en ROS node med navn "velocity"
     ros::NodeHandle n;
-    turtlebot bot;
-    geometry_msgs::Twist velocity;
-    // Creating subscriber and publisher
-    ros::Subscriber sub = n.subscribe("/direction",
-        1, &turtlebot::dir_sub, &bot);
+    turtlebot bot; //Laver et class objekt med navn bot. Denne class er oprettet i turtlebot.hpp
+    geometry_msgs::Twist velocity; //Opretter en variabel med type geometry_msgs::Twist med navn velocity
+
+    ros::Subscriber sub = n.subscribe("/direction", 1, &turtlebot::dir_sub, &bot); //Opretter en subscriber på topic /direction
     ros::Publisher pub = n.advertise<geometry_msgs::Twist>
-        ("/cmd_vel_mux/input/teleop", 10);
-    ros::Rate rate(10);
+        ("/cmd_vel_mux/input/teleop", 10); //Opretter en publisher som publisher til /cmd_vel_mux/input/teleop
+    ros::Rate rate(10); //sætter opdateringshastighed til 10hz
     while (ros::ok()) {
-        ros::spinOnce();
-        // Publish velocity commands to turtlebot
+        ros::spinOnce(); //Kalder callback funktionerne, her turtlebot::dir_sub, som ligger i turtlebot.cpp
+      
+/*
+I include filen turtlebot.hpp er følgende funktion deklereret void vel_cmd(geometry_msgs::Twist &velocity, 
+ros::Publisher &pub, ros::Rate &rate); 
+Vi skal altså sende en besked med type geometry:msgs::Twist, en publisher og en ros::rate. 
+Funktionen er i turtlebot.cpp
+*/
         bot.vel_cmd(velocity, pub, rate);
-        rate.sleep();
+        rate.sleep();//pauser programmet indtil næste cyklus
     }
     return 0;
 }
