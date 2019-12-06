@@ -7,17 +7,17 @@
 #include <math.h> 
 #include <sstream>
 
-int hiLo = 0;                               //hiLo er tallet vi publisher til sidst
+int hiLo = 0;                                           //hiLo er tallet vi publisher til sidst
 
 kobuki_msgs::SensorState msg;
 
-int chargestateCallback(const kobuki_msgs::SensorState & chg)
+int chargestateCallback(const kobuki_msgs::SensorState & chg)   //callback på events for turtlebottenbotten
 {                  
     
     int chargingState=0;
-    chargingState = chg.charger;
+    chargingState = chg.charger;                        //der findes mellem 0-6 events omkring ladning. 0=lader ikke. 2=fuldopladt. 6=lader.
 
-    return chargingState;
+    return chargingState;                               //retunerer hvad event den opfanger den er ved
 }
 
 void batteryCallback(const kobuki_msgs::SensorState & msg)
@@ -26,7 +26,7 @@ void batteryCallback(const kobuki_msgs::SensorState & msg)
     
     if(chargestateCallback(msg) == 2)                   //2 betyder fuldopladt
     {
-        hiLo = 0;                           //0 betyder vent
+        hiLo = 0;                                       //0 betyder vent
         /////// KODE FOR AT KØRE 5 CM BAGUD ///////////////////////////////////////////////
     
         //ros::init(argc, argv, "battery1");
@@ -75,7 +75,7 @@ void batteryCallback(const kobuki_msgs::SensorState & msg)
  
 int main(int argc, char **argv)
 {
-    ros::init(argc, argv, "battery");
+    ros::init(argc, argv, "battery1");
  
     ros::NodeHandle n;
  
@@ -103,13 +103,6 @@ int main(int argc, char **argv)
 
     loop_rate.sleep();
     }
-
-/*
-    while(ros::ok()){
-    loop_rate.sleep();
-    ros::spinOnce(); 
-    }
-*/
 
     return 0;
 }
