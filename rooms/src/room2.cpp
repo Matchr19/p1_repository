@@ -4,23 +4,22 @@
 
 int main(int argc, char **argv)
 {
-const double PI = 3.14159265358979323846;
 
 ros::init(argc, argv, "room2");
 ros::NodeHandle n;
 ros::Publisher movement_pub = n.advertise<geometry_msgs::Twist>("mobile_base/commands/velocity",1); //for sensors the value after , should be higher to get a more accurate result (queued)
-ros::Rate rate(10); //the larger the value, the "smoother" , try value of 1 to see "jerk" movement
+ros::Rate rate(10); 
+ros::Time start= ros::Time::now();
 
-std::cout << "Kører til rum 2" << std::endl;
+std::cout << "Kører ud af ladestationen" << std::endl;
 
-//turn right
-ros::Time start_turn = ros::Time::now();
-while(ros::Time::now() - start_turn < ros::Duration(2))
+
+while(ros::Time::now() - start < ros::Duration(3))
 {
     geometry_msgs::Twist move;
     //velocity controls
-    move.linear.x = 0.2; //speed value m/s
-    move.angular.z = 0;
+    move.linear.x = 0; //speed value m/s
+    move.angular.y = -0.2;
     movement_pub.publish(move);
 
     ros::spinOnce();
