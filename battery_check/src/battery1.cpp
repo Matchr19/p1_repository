@@ -33,10 +33,10 @@ void batteryCallback(const kobuki_msgs::SensorState & msg)
         ros::Publisher movement_pub = n.advertise<geometry_msgs::Twist>("mobile_base/commands/velocity",1); //for sensors the value after , should be higher to get a more accurate result (queued)
         ros::Rate rate(10); 
         ros::Time start = ros::Time::now();
-        while(ros::Time::now() - start < ros::Duration(1.0))
+        while(ros::Time::now() - start < ros::Duration(1.0)) //kør NU, i 1 sekund
         {
             geometry_msgs::Twist move;
-            move.linear.x = -0.1; //speed value m/s
+            move.linear.x = -0.1;                            //kør bagud (-) med hastigheden (0.1)
             movement_pub.publish(move);
         }
     }
