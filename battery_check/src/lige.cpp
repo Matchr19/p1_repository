@@ -1,41 +1,29 @@
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
-#include <kobuki_msgs/BumperEvent.h>
-#include <iostream>
-#include <string>
+#include <math.h>
 
-
-geometry_msgs::Twist drive(geometry_msgs::Twist &msg)
+int main(int argc, char **argv)
 {
-        msg.angular.z = 2;
-    
-    
-    std::cout << "Jeg drejer rundt med: " << msg.angular.z << " km/t" << std::endl;
-    return msg;
+//const double PI = 3.14159265358979323846;
+
+
+ros::init(argc, argv, "battery1");
+ros::NodeHandle n;
+ros::Publisher movement_pub = n.advertise<geometry_msgs::Twist>("mobile_base/commands/velocity",1); //for sensors the value after , should be higher to get a more accurate result (queued)
+ros::Rate rate(10); 
+
+//turn right
+ros::Time start = ros::Time::now();
+while(ros::Time::now() - start < ros::Duration(1.0))
+{
+    geometry_msgs::Twist move;
+    //velocity controls
+    move.linear.x = -0.1; //speed value m/s
+    movement_pub.publish(move);
+
+    ros::spinOnce();
+    rate.sleep();
 }
 
-
-
-int main(int argc, char *argv[])
-{
-    ros::init(argc, argv, "lige");
-    srand(time(NULL));
-    ros::NodeHandle n;
-    ros::Rate loop_rate(1000);
-    
-    
-    ros::Publisher cmd_vel_pub = n.advertise<geometry_msgs::Twist>("/cmd_vel_mux/input/teleop", 1, drive);
-    geometry_msgs::Twist msg;
-    while(ros::ok())
-    {
-    
-    cmd_vel_pub.publish(drive(msg));
-    loop_rate.sleep();
-    
-
-    }
- 
-    
-    
-    return 0;
+return 0;
 }

@@ -28,19 +28,20 @@ void batteryCallback(const kobuki_msgs::SensorState & msg)
     {
         hiLo = 0;                           //0 betyder vent
         //KØR 5 CM BAGUD (Christian laver en kort kode til dette)
+        
     }
 
     else if (chargestateCallback(msg) == 0)             //0 betyder den ikke lader
     {
         
-        if(batt < 135)                      //når spændingen er under 135 dV
+        if(batt < 145)                      //når spændingen er under 135 dV
         {
             
             hiLo = 1;                       //1 betyder kør til dock
 
         }
 
-        else if(batt >= 135)                //når spændingen er over eller lige med 135 dV
+        else if(batt >= 145)                //når spændingen er over eller lige med 135 dV
         {
 
             hiLo = 2;                       //2 betyder alt er okay
@@ -74,6 +75,9 @@ int main(int argc, char **argv)
 
     ros::Rate loop_rate(1);
 
+/////// KODE FOR AT KØRE 5 CM BAGUD ///////////////////////////////////////////////
+    
+///////////////////////////////////////////////////////////////////////////////////
 
     while (ros::ok())
     {
