@@ -18,8 +18,8 @@ while(ros::Time::now() - start < ros::Duration(3))
 {
     geometry_msgs::Twist move;
     //velocity controls
-    move.linear.x = 0; //speed value m/s
-    move.angular.y = -0.2;
+    move.linear.x = 0.2; //speed value m/s
+    move.angular.z = 0.0;
     movement_pub.publish(move);
 
     ros::spinOnce();
