@@ -7,7 +7,6 @@
 geometry_msgs::Twist msg;
 kobuki_msgs::BumperEvent bumpMsg;
 ros::Publisher cmd_vel_pub;
-
 void sendPub(double ligeud, double drej)
 {
     msg.linear.x = ligeud;
@@ -16,7 +15,6 @@ void sendPub(double ligeud, double drej)
     << msg.linear.x << " "
     << "Angular: " << msg.angular.z << std::endl;
     cmd_vel_pub.publish(msg);
-    ros::spinOnce();
 }
 
 void drive()
@@ -48,8 +46,6 @@ void drive()
 
 void bump(const kobuki_msgs::BumperEvent &bumpMsg)
 {
-
-    
     if (bumpMsg.state == 1)
     {
         int bumpo = bumpMsg.bumper;
@@ -58,7 +54,6 @@ void bump(const kobuki_msgs::BumperEvent &bumpMsg)
         
         sendPub(0, 10);
         std::cout << "JEG ER KØRT IND I NOGET med:" << std::endl;
-        ros::spinOnce();
         
     } 
     else
@@ -76,13 +71,12 @@ int main(int argc, char *argv[])
     ros::NodeHandle n;
     ros::Rate loop_rate(0.4);
     cmd_vel_pub = n.advertise<geometry_msgs::Twist>("/cmd_vel_mux/input/teleop", 1);
-    ros::Subscriber bumperSub = n.subscribe("/mobile_base/events/bumper", 1, bump);
+    ros::Subscriber bumperSub = n.subscribe("/mobile_base/events/bumper", 5, bump);
     while(ros::ok())
     {
     std::cout << "Jeg er kommet ind i loopet" << std::endl;
     bump(bumpMsg);
     loop_rate.sleep();
-    ros::spinOnce();
     }
     return 0;
 }

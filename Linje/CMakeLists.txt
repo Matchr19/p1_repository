@@ -7,7 +7,7 @@ project(Linje)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp kobuki_msgs geometry_msgs nav_msgs std_msgs move_base_msgs) 
+find_package(catkin REQUIRED COMPONENTS roscpp kobuki_msgs geometry_msgs nav_msgs std_msgs move_base_msgs linefollowertest) 
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -101,7 +101,7 @@ find_package(catkin REQUIRED COMPONENTS roscpp kobuki_msgs geometry_msgs nav_msg
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES Linje
-CATKIN_DEPENDS kobuki_msgs roscpp geometry_msgs nav_msgs std_msgs move_base_msgs
+#CATKIN_DEPENDS kobuki_msgs roscpp geometry_msgs nav_msgs std_msgs move_base_msgs linefollowertest
 #  DEPENDS system_lib
 )
 
@@ -167,6 +167,12 @@ ${catkin_LIBRARIES}
 add_executable(${PROJECT_NAME}_Hard src/Hard.cpp)
 add_dependencies(${PROJECT_NAME}_Hard ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(${PROJECT_NAME}_Hard
+${catkin_LIBRARIES}
+)
+
+add_executable(${PROJECT_NAME}_docksub src/docksub.cpp)
+add_dependencies(${PROJECT_NAME}_docksub ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(${PROJECT_NAME}_docksub
 ${catkin_LIBRARIES}
 )
 

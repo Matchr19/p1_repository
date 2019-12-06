@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "ros/ros.h"
 #include "opencv2/opencv.hpp"
 #include "ros/console.h"
-#include "Linefollower/pos.h"
+#include "linefollowertest/pos.h"
 /*
 Linedetect::imageCallback er en funktion som kræver en variabel sensor_msgs::ImageConstPtr& msg (Et billede)
 Vi kører denne funktion, hver gang der kommer et billede
