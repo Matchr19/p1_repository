@@ -63,10 +63,6 @@ void batteryCallback(const kobuki_msgs::SensorState & msg)
     else                                    //hvis den ikke er 0 eller 2/hvis den ikke er fuldopladt eller ikke er uden for laderen
     {
         hiLo = 0;
-        //for at den ikke bliver ved med at have docking kørende når den forlader
-        //kør følgende én gang:
-        //system (rosnode kill kobuki_auto_docking activate.launch)
-        //system (rosnode kill kobuki_auto_docking minimal.launch)
     }
 
 }

@@ -19,7 +19,11 @@ int main(void)
     const char *cmde = "gnome-terminal -x sh -c \"roslaunch kobuki_auto_docking activate.launch --screen\"";
     system(cmde);
 
-    
+///////////////////////////////////////////////////////////////////////////////////
+//// NÅR VI BLIVER FÆRDIGE MED KODNING                                         ////
+//// 1. minimal.launch skal køre i den store launchfil vi laver                ////
+//// 2. Kør kun activ.launch, da denne selv lukker efter docking               ////
+///////////////////////////////////////////////////////////////////////////////////    
 
     return 0;
 }

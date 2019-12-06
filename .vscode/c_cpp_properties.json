@@ -13,7 +13,8 @@
                 "${workspaceFolder}/Linefollower/include",
                 "/home/jacob/P1_projekt/devel/include/**",
                 "/home/ros/github/devel/.private/battery_check/include",
-                "/home/jacob/P1_projekt/devel/.private/Linefollower/include"
+                "/home/jacob/P1_projekt/devel/.private/Linefollower/include",
+                "/opt/ros/kinetic/include"
             ],
             "name": "ROS",
             "intelliSenseMode": "gcc-x64",
