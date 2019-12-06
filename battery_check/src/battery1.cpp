@@ -27,8 +27,20 @@ void batteryCallback(const kobuki_msgs::SensorState & msg)
     if(chargestateCallback(msg) == 2)                   //2 betyder fuldopladt
     {
         hiLo = 0;                           //0 betyder vent
-        //KØR 5 CM BAGUD (Christian laver en kort kode til dette)
-        
+        /////// KODE FOR AT KØRE 5 CM BAGUD ///////////////////////////////////////////////
+    
+        //ros::init(argc, argv, "battery1");
+        ros::NodeHandle n;
+        ros::Publisher movement_pub = n.advertise<geometry_msgs::Twist>("mobile_base/commands/velocity",1); //for sensors the value after , should be higher to get a more accurate result (queued)
+        ros::Rate rate(10); 
+        ros::Time start = ros::Time::now();
+        while(ros::Time::now() - start < ros::Duration(1.0))
+        {
+            geometry_msgs::Twist move;
+            move.linear.x = -0.1; //speed value m/s
+            movement_pub.publish(move);
+        }
+        ///////////////////////////////////////////////////////////////////////////////////
     }
 
     else if (chargestateCallback(msg) == 0)             //0 betyder den ikke lader
@@ -74,10 +86,6 @@ int main(int argc, char **argv)
     kobuki_msgs::PowerSystemEvent msg;
 
     ros::Rate loop_rate(1);
-
-/////// KODE FOR AT KØRE 5 CM BAGUD ///////////////////////////////////////////////
-    
-///////////////////////////////////////////////////////////////////////////////////
 
     while (ros::ok())
     {
