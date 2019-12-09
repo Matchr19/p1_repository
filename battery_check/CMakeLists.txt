@@ -14,13 +14,6 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 
-
- ##Generate added messages and servises are listet here
-  generate_messages(
-    DEPENDENCIES
-    std_msgs
-  )
-
 ###################################
 ## catkin specific configuration ##
 ###################################
@@ -54,18 +47,10 @@ target_link_libraries(${PROJECT_NAME}_battery1
 )
 
 
-# battery Executable
-#add_executable(${PROJECT_NAME}_battery src/battery.cpp)
-#set_target_properties(${PROJECT_NAME}_battery PROPERTIES OUTPUT_NAME battery PREFIX "")
-#target_link_libraries(${PROJECT_NAME}_battery
-#  ${catkin_LIBRARIES}
-#)
-
-
 
 # Navigation Executable
 add_executable(${PROJECT_NAME}_Navigation src/Navigation.cpp)
-set_target_properties(${PROJECT_NAME}_Navigation PROPERTIES OUTPUT_NAME SubBatteri PREFIX "")
+set_target_properties(${PROJECT_NAME}_Navigation PROPERTIES OUTPUT_NAME Navigation PREFIX "")
 target_link_libraries(${PROJECT_NAME}_Navigation
   ${catkin_LIBRARIES}
 )
@@ -83,7 +68,6 @@ target_link_libraries(${PROJECT_NAME}_Navigation
 # Mark executables for installation
 install(TARGETS
   ${PROJECT_NAME}_battery1
-  ${PROJECT_NAME}_battery
   ${PROJECT_NAME}_Navigation
 #  ${PROJECT_NAME}_NAME
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
