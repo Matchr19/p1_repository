@@ -17,8 +17,8 @@ include_directories(
  ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(${PROJECT_NAME}_battery src/battery_battery.cpp)
-set_target_properties(${PROJECT_NAME}_battery PROPERTIES OUTPUT_NAME battery_battery PREFIX "")
+add_executable(${PROJECT_NAME}_battery src/battery.cpp)
+set_target_properties(${PROJECT_NAME}_battery PROPERTIES OUTPUT_NAME battery PREFIX "")
 target_link_libraries(${PROJECT_NAME}_battery
   ${catkin_LIBRARIES}
 )
