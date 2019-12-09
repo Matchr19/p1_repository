@@ -13,11 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
 )
 
-##Generate messeges in the msg folder
-add_message_files(
-  FILES
-  Msgtutorial.msg
- )
+
 
  ##Generate added messages and servises are listet here
   generate_messages(
@@ -92,4 +88,7 @@ install(TARGETS
 #  ${PROJECT_NAME}_NAME
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
+
+
+
 
