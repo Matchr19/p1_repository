@@ -6,19 +6,36 @@
 
  void recallCallback(const kobuki_msgs::ButtonEvent &msg)
   {
-    int buttonstate=0;
+    bool hej = false;
     
-    buttonstate= msg.Button1;
+    int buttonstate1=0;
 
-    //This funktion opens busroute, in addition to recall the robot to the basis point from the picked point
+    int butttonstate2=0;
+    
+    buttonstate1= msg.Button1;
 
-    if (buttonstate==1){
+    butttonstate2= msg.Button2;
 
+    // denne funktion vil starte launchfilen for linefollower
+
+    
+    if(hej= true && butttonstate2==2){
+
+      system("rosnode kill velocity" "rosnode kill detection" "rosnode kill dockdetector");
+
+    }
+    
+    if (buttonstate1==1){  
+
+        
+        if( hej== false){
         std::cout << "The button is on"<< std::endl;
 
 
-        system("rosrun rooms room1");
+        system("roslaunch linefollowertest lf.launch");
 
+        hej = true;
+        }
     }
 
   }
@@ -26,6 +43,7 @@
  int main(int argc, char **argv)
   {
   
+
     ros::init(argc, argv, "recall_1point");
  
   
