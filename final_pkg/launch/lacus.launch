@@ -25,4 +25,4 @@
 <node pkg="final_pkg" type="battery" name="battery_control"/>
 
 
-</launch>
+</launch>     <!-- betyder afslut launch--> 
